@@ -1,0 +1,25 @@
+{	
+	"billId":"111",
+	"storeUserId": "1",
+	"createdDate": "12022024",
+	"totalPrice": "537",
+	"discountAmount": "35",
+	"billAmount": "502",
+	"items":[
+		{
+			"name": "bread",
+			"price": "11",
+			"quantity": "2"
+		},
+		{
+			"name": "tissue papper box",
+			"price": "16",
+			"quantity": "6"
+		},
+		{
+			"name": "eggs",
+			"price": "5",
+			"quantity": "2"
+		}
+	]
+}
