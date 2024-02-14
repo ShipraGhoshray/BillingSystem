@@ -9,17 +9,20 @@
 		{
 			"name": "bread",
 			"price": "11",
-			"quantity": "2"
+			"quantity": "2",
+			"type":"groceries"
 		},
 		{
 			"name": "tissue papper box",
 			"price": "16",
-			"quantity": "6"
+			"quantity": "6",
+			"type":"stationery"
 		},
 		{
 			"name": "eggs",
 			"price": "5",
-			"quantity": "2"
+			"quantity": "2",
+			"type":"grocerries"
 		}
 	]
 }

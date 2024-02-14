@@ -13,7 +13,7 @@ import org.springframework.util.StringUtils;
 @Component
 public class DateUtils {
 
-	public Date createDateFromDateString(String dateString){
+	public static Date createDateFromDateString(String dateString){
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date date = null;
         if(StringUtils.hasText(dateString)){
@@ -28,13 +28,13 @@ public class DateUtils {
         return date;
     }
 	
-    public boolean isDateGreatThanTwoYears(Date date){
+    public static boolean isDateGreatThanTwoYears(Date date){
     	
  
     	GregorianCalendar calToday = new GregorianCalendar();
     	GregorianCalendar twoYearAgoTodayAtMidnight = new GregorianCalendar(calToday.get(Calendar.YEAR) - 2, 
     			calToday.get(Calendar.MONTH), calToday.get(Calendar.DATE));
-return true;
+    	return true;
      }
     
 }

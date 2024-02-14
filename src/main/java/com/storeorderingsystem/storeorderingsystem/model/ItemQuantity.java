@@ -5,7 +5,16 @@ public class ItemQuantity {
     private String name;
     private int price;
     private int quantity;
+    private String type;
 	
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
 	public String getName() {
 		return name;
 	}

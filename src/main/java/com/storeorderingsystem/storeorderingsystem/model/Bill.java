@@ -12,8 +12,6 @@ public class Bill {
     private List<ItemQuantity> items;
     private long createdDate;
     private float totalPrice;
-    private int discountAmount; 
-    private float billAmount;
     
 	public String getBillId() {
 		return billId;
@@ -31,28 +29,12 @@ public class Bill {
 		this.createdDate = createdDate;
 	}
 
-	public float getBillAmount() {
-		return billAmount;
-	}
-
-	public void setBillAmount(float billAmount) {
-		this.billAmount = billAmount;
-	}
-
 	public String getStoreUserId() {
 		return storeUserId;
 	}
 
 	public void setStoreUserId(String storeUserId) {
 		this.storeUserId = storeUserId;
-	}
-
-	public int getDiscountAmount() {
-		return discountAmount;
-	}
-
-	public void setDiscountAmount(int discountAmount) {
-		this.discountAmount = discountAmount;
 	}
 
 	public float getTotalPrice() {
