@@ -2,9 +2,6 @@
 	"billId":"111",
 	"storeUserId": "1",
 	"createdDate": "12022024",
-	"totalPrice": "537",
-	"discountAmount": "35",
-	"billAmount": "502",
 	"items":[
 		{
 			"name": "bread",

@@ -14,7 +14,7 @@ public class ItemQuantity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ITEM_ID")
-    private String itemId;
+    private long itemId;
 
 	@Column(name = "NAME")
     private String name;
@@ -36,11 +36,11 @@ public class ItemQuantity {
 		this.type = type;
 	}
 
-	public String getItemId() {
+	public long getItemId() {
 		return itemId;
 	}
 
-	public void setItemId(String itemId) {
+	public void setItemId(long itemId) {
 		this.itemId = itemId;
 	}
 	

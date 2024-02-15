@@ -14,13 +14,13 @@ public class Bill {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "BILL_ID")
-    private String billId;
+    private long billId;
 
 	@Column(name = "STORE_USER_ID")
-    private String storeUserId;
+    private long storeUserId;
 	
 	@Column(name = "ITEM_QUANTITY_ID")
-    private String itemsQuantityId;
+    private long itemsQuantityId;
 	
 	@Column(name = "CREATED_DATE")
     private long createdDate;
@@ -34,11 +34,11 @@ public class Bill {
 	@Column(name = "BILL_AMOUNT")
     private double billAmount;
 	
-	public String getBillId() {
+	public long getBillId() {
 		return billId;
 	}
 
-	public void setBillId(String billId) {
+	public void setBillId(long billId) {
 		this.billId = billId;
 	}
 
@@ -58,19 +58,19 @@ public class Bill {
 		this.billAmount = billAmount;
 	}
 
-	public String getStoreUserId() {
+	public long getStoreUserId() {
 		return storeUserId;
 	}
 
-	public void setStoreUserId(String storeUserId) {
+	public void setStoreUserId(long storeUserId) {
 		this.storeUserId = storeUserId;
 	}
 	
-	public String getItemsQuantityId() {
+	public long getItemsQuantityId() {
 		return itemsQuantityId;
 	}
 
-	public void setItemsQuantityId(String itemsQuantityId) {
+	public void setItemsQuantityId(long itemsQuantityId) {
 		this.itemsQuantityId = itemsQuantityId;
 	}
 

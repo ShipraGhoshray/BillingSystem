@@ -34,23 +34,22 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!--<dependency>
-    		<groupId>org.junit.vintage</groupId>
-    		<artifactId>junit-vintage-engine</artifactId>
+		<dependency>
+    		<groupId>org.junit.jupiter</groupId>
+    		<artifactId>junit-jupiter-api</artifactId>
     		<scope>test</scope>
-    		<exclusions>
-        		<exclusion>
-            		<groupId>org.hamcrest</groupId>
-            		<artifactId>hamcrest-core</artifactId>
-        		</exclusion>
-    		</exclusions>
-		</dependency>-->
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+                    <jvmArguments>
+                        -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005
+                    </jvmArguments>
+                </configuration>
 			</plugin>
 		</plugins>
 	</build>
