@@ -1,5 +1,7 @@
 package com.storeorderingsystem.storeorderingsystem.repository;
 
+import java.util.Objects;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -33,6 +35,18 @@ public class StoreUser {
 
 	@Column(name = "JOINING_DATE")
 	private String joiningDate;
+	
+	public StoreUser() {
+	}
+
+	public StoreUser(long id, String userType, String firstName, String lastName, String emailId, long phoneNumber) {
+		this.id = id;
+	    this.userType = userType;
+	    this.firstName = firstName;
+	    this.lastName = lastName;
+	    this.emailId = emailId;
+	    this.phoneNumber = phoneNumber;
+	}
 	
 	public String getJoiningDate() {
 		return joiningDate;
@@ -88,5 +102,37 @@ public class StoreUser {
 
 	public void setPhoneNumber(long phoneNumber) {
 		this.phoneNumber = phoneNumber;
+	}
+	
+	@Override
+	public String toString() {
+		return "StoreUser{" +
+				"id='" + id + '\'' +
+				", userType='" + userType + '\'' +
+				", firstName='" + firstName + '\'' +
+				", lastName='" + lastName + '\'' +
+				", emailId='" + emailId + '\'' +
+				", phoneNumber'" + phoneNumber + '\'' +
+				'}';
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) 
+			return true;
+		if (o == null || getClass() != o.getClass()) 
+			return false;
+		StoreUser that = (StoreUser) o;
+		return Objects.equals(id, that.id) && 
+				Objects.equals(userType, that.userType)&&
+				Objects.equals(firstName, that.firstName)&&
+				Objects.equals(lastName, that.lastName)&&
+				Objects.equals(emailId, that.emailId)&&
+				Objects.equals(phoneNumber, that.phoneNumber);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, userType, firstName, lastName, emailId, phoneNumber);
 	}
 }

@@ -6,12 +6,12 @@ import org.springframework.context.ApplicationListener;
 
 import com.storeorderingsystem.storeorderingsystem.repository.StoreUser;
 import com.storeorderingsystem.storeorderingsystem.repository.StoreUserRepository;
-import com.storeorderingsystem.storeorderingsystem.service.OrderService;
+import com.storeorderingsystem.storeorderingsystem.service.BillProcessingService;
 
 public class AppStartupEvent implements ApplicationListener<ApplicationReadyEvent>{
 
 	@Autowired
-	private OrderService billProcessor;
+	private BillProcessingService billProcessor;
 	
 	private final StoreUserRepository storeUserRepository;
 	

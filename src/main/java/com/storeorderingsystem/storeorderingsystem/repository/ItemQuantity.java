@@ -1,5 +1,7 @@
 package com.storeorderingsystem.storeorderingsystem.repository;
 
+import java.util.Objects;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,6 +30,18 @@ public class ItemQuantity {
 	@Column(name = "TYPE")
     private String type;
 	
+	public ItemQuantity() {
+	}
+
+	public ItemQuantity(long itemId, String name, int price, int quantity, String type) {
+		this.itemId = itemId;
+	    this.name = name;
+	    this.price = price;
+	    this.quantity = quantity;
+	    this.type = type;
+	}
+	    
+	    
 	public String getType() {
 		return type;
 	}
@@ -66,5 +80,35 @@ public class ItemQuantity {
 
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+	
+	@Override
+	public String toString() {
+		return "ItemQuantity{" +
+				"itemId='" + itemId + '\'' +
+				", name='" + name + '\'' +
+				", price='" + price + '\'' +
+				", quantity='" + quantity + '\'' +
+				", type='" + type + '\'' +
+				'}';
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) 
+			return true;
+		if (o == null || getClass() != o.getClass()) 
+			return false;
+		ItemQuantity that = (ItemQuantity) o;
+		return Objects.equals(itemId, that.itemId) &&
+				Objects.equals(name, that.name)&&
+				Objects.equals(price, that.price)&&
+				Objects.equals(quantity, that.quantity)&&
+				Objects.equals(type, that.type);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(itemId, name, price, quantity, type);
 	}
 }

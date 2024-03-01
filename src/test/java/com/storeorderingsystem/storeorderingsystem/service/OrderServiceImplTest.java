@@ -9,23 +9,19 @@ import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.storeorderingsystem.storeorderingsystem.model.BillAmount;
 import com.storeorderingsystem.storeorderingsystem.model.ItemQuantity;
 import com.storeorderingsystem.storeorderingsystem.repository.BillRepository;
 import com.storeorderingsystem.storeorderingsystem.repository.ItemQuantityRepository;
 import com.storeorderingsystem.storeorderingsystem.repository.StoreUserRepository;
+import com.storeorderingsystem.storeorderingsystem.service.impl.BillProcessingServiceImpl;
 import com.storeorderingsystem.storeorderingsystem.util.Constants;
 
 @RunWith(SpringRunner.class)
@@ -45,7 +41,7 @@ public class OrderServiceImplTest {
 	private StoreUserRepository storeUserRepository;
     
     @Autowired
-    private OrderServiceImpl orderService;
+    private BillProcessingServiceImpl orderService;
   //@MockBean
     
     private final String URI = "http://localhost:8080/api/generateBillAmount";
@@ -58,7 +54,7 @@ public class OrderServiceImplTest {
     	billRepository = mock(BillRepository.class);
     	itemRepository = mock(ItemQuantityRepository.class);
     	storeUserRepository = mock(StoreUserRepository.class);
-    	orderService = new OrderServiceImpl(billRepository, itemRepository, storeUserRepository);
+    	orderService = new BillProcessingServiceImpl(billRepository, itemRepository, storeUserRepository);
     }
 
    private ItemQuantity createItemQuantityModel(String name, int pric, int quantity, String itemType) {

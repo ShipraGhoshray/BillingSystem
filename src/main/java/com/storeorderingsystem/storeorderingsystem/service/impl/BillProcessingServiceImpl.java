@@ -1,13 +1,11 @@
-package com.storeorderingsystem.storeorderingsystem.service;
+package com.storeorderingsystem.storeorderingsystem.service.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import com.storeorderingsystem.storeorderingsystem.model.BillAmount;
 import com.storeorderingsystem.storeorderingsystem.repository.Bill;
@@ -15,26 +13,20 @@ import com.storeorderingsystem.storeorderingsystem.repository.BillRepository;
 import com.storeorderingsystem.storeorderingsystem.repository.ItemQuantity;
 import com.storeorderingsystem.storeorderingsystem.repository.ItemQuantityRepository;
 import com.storeorderingsystem.storeorderingsystem.repository.StoreUser;
-import com.storeorderingsystem.storeorderingsystem.repository.StoreUserRepository;	
+import com.storeorderingsystem.storeorderingsystem.repository.StoreUserRepository;
+import com.storeorderingsystem.storeorderingsystem.service.BillProcessingService;
 import com.storeorderingsystem.storeorderingsystem.util.Constants;
 import com.storeorderingsystem.storeorderingsystem.util.DateUtils;
 
 @Service
-public class OrderServiceImpl implements OrderService{
+public class BillProcessingServiceImpl implements BillProcessingService{
 
-	//private RestTemplate restTemplate;
 	private BillRepository billRepository;
 	private StoreUserRepository  storeUserRepository;
 	private ItemQuantityRepository  itemQuantityRepository;
 	
-	/*
-	 * public OrderServiceImpl() { }
-	 */
-	
-	public OrderServiceImpl(
-			/* RestTemplate restTemplate, */ BillRepository billRepository, ItemQuantityRepository itemQuantityRepository,
+	public BillProcessingServiceImpl(BillRepository billRepository, ItemQuantityRepository itemQuantityRepository,
 			StoreUserRepository storeUserRepository) {
-		//this.restTemplate = restTemplate;
 		this.billRepository = billRepository;
 		this.itemQuantityRepository = itemQuantityRepository;
 		this.storeUserRepository = storeUserRepository;
@@ -78,7 +70,7 @@ public class OrderServiceImpl implements OrderService{
             		
                 	if(Double.compare(billAmount, 0) > 0) {
                     	BillAmount billAmountObj = getBillAmount(billInfo, billAmount); 
-                    	//saveBillAndItemRepository(billInfo, billAmount, billAmount, itemRepositoryList);
+                    	saveBillAndItemRepository(billInfo, billAmount, billAmount, itemRepositoryList);
                     	return billAmountObj;
                 	}
             	}
@@ -111,9 +103,7 @@ public class OrderServiceImpl implements OrderService{
 			double discountAmount, List<com.storeorderingsystem.storeorderingsystem.repository.ItemQuantity> itemRepositoryList) {
 		Bill billRepoObj = null;
     	if(itemRepositoryList.size() > 0) {
-    		for(ItemQuantity item: itemRepositoryList) {
-    			
-    			item = itemQuantityRepository.save(item);        	
+    		for(ItemQuantity item: itemRepositoryList) {       	
     			billRepoObj = new Bill();
     			//billRepoObj.setBillId(billInfo.getBillId());
     			billRepoObj.setStoreUserId(Long.valueOf(billInfo.getStoreUserId()));
@@ -156,13 +146,21 @@ public class OrderServiceImpl implements OrderService{
 	}
 	
 	private double calculateDiscountAmount(int discountPercentage, double billAmount) {
-		
 		return discountPercentage / 100 * billAmount;
 	}
 	
 	private void sendErrorMessage(String errorMessage) {
         System.out.println(errorMessage);
-        //restTemplate.postForLocation("/api/errors", errorMessage);
+    }	
+	
+    @Override
+    public Iterable<Bill> lookup(){
+        return billRepository.findAll();
+    }
+
+    @Override
+    public long total() {
+        return billRepository.count();
     }
 	
 }
