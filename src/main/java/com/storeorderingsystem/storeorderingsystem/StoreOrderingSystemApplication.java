@@ -1,9 +1,19 @@
 package com.storeorderingsystem.storeorderingsystem;
 
+import java.io.File;
+import java.io.IOException;
+
+import org.json.JSONObject;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.exc.StreamWriteException;
+import com.fasterxml.jackson.databind.DatabindException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.storeorderingsystem.storeorderingsystem.repository.ItemQuantity;
 import com.storeorderingsystem.storeorderingsystem.service.impl.ItemInventoryServiceImpl;
 import com.storeorderingsystem.storeorderingsystem.service.impl.UserServiceImpl;
 import com.storeorderingsystem.storeorderingsystem.util.Constants;
@@ -23,6 +33,32 @@ public class StoreOrderingSystemApplication implements CommandLineRunner{
 	public static void main(String[] args) {
 		//DateUtils.isDateGreatThanTwoYears(DateUtils.)
 		SpringApplication.run(StoreOrderingSystemApplication.class, args);
+		
+		
+		try {
+			//JSONObject parentJson = new JSONObject();
+			ItemQuantity item = new ItemQuantity(1L, "Bread", 10, 5, Constants.ITEM_TYPE_GROCERIES);
+			ObjectMapper objectMapper = new ObjectMapper () ;
+			File itemFile = new File("target/itemJson.json");
+			objectMapper.writeValue (itemFile, item);
+			
+			ItemQuantity result = objectMapper.readValue(itemFile, ItemQuantity.class);
+			System.out.println(result);
+				
+			String json = "{ \"itemId\" : \"2\", \"name\": \"Milk\", \"price\": \"33\"}";
+			result = objectMapper.readValue(json, ItemQuantity.class);
+			System.out.println(result);
+			
+		} catch (StreamWriteException | DatabindException e) {
+			e.printStackTrace();
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}  catch (IOException e) {
+			e.printStackTrace();
+		} 
+
+		
+		
 	}
 
 	@Override
