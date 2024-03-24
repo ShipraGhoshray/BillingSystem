@@ -4,14 +4,14 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.storeorderingsystem.storeorderingsystem.repository.StoreUser;
+import com.storeorderingsystem.storeorderingsystem.model.User;
 
 @Service
 public interface UserService{
 
-	public StoreUser createStoreUser(long id, String userType, String firstName, String lastName, String emailId, long phoneNumber);
-	public Iterable<StoreUser> lookup();
-	public Optional<StoreUser> findById(long id);
+	public User createStoreUser(long id, String userType, String firstName, String lastName, String username, String password, String emailId, long phoneNumber);
+	public Iterable<User> lookup();
+	public Optional<User> findById(long id);
 	public long total();
-	public void delete(StoreUser user);
+	public void delete(User user);
 }

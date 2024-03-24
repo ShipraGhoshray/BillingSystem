@@ -1,10 +1,14 @@
-package com.storeorderingsystem.storeorderingsystem.webservice;
+package com.storeorderingsystem.storeorderingsystem.controller;
 
 import java.net.URISyntaxException;
 import java.util.Collection;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,56 +24,64 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.storeorderingsystem.storeorderingsystem.model.Bill;
 import com.storeorderingsystem.storeorderingsystem.model.BillAmount;
+import com.storeorderingsystem.storeorderingsystem.model.User;
 import com.storeorderingsystem.storeorderingsystem.repository.ItemQuantity;
-import com.storeorderingsystem.storeorderingsystem.repository.StoreUser;
 import com.storeorderingsystem.storeorderingsystem.service.BillProcessingService;
 import com.storeorderingsystem.storeorderingsystem.service.ItemInventoryService;
 import com.storeorderingsystem.storeorderingsystem.service.UserService;
+import com.storeorderingsystem.storeorderingsystem.util.Constants;
 
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = "http://localhost:3000")
-public class OrderWebService {
+public class OrderController {
+	
+	Logger log = LoggerFactory.getLogger(OrderController.class);
 	
 	private final UserService userService;
 	private final BillProcessingService billProcessingService;
 	private final ItemInventoryService itemInventoryService;
 	
-	public OrderWebService(UserService userService, BillProcessingService billProcessingService, ItemInventoryService itemInventoryService) {
+	public OrderController(UserService userService, BillProcessingService billProcessingService, ItemInventoryService itemInventoryService) {
 		this.userService = userService;
 		this.billProcessingService = billProcessingService;
 		this.itemInventoryService = itemInventoryService;
 	}
 	
-	@GetMapping("/itemInventory")
-    public Iterable<ItemQuantity> getItemInventory(){
-        return this.itemInventoryService.lookup();
-    }
-	
-	@GetMapping("/itemInventoryApi")
+	@GetMapping("/inventory")
     public Collection<ItemQuantity> getItemInventoryReact(){
         return (Collection<ItemQuantity>) this.itemInventoryService.lookup();
     }
 	
-	@GetMapping("/userDetails")
-    public Iterable<StoreUser> getUsers(){
-        return this.userService.lookup();
+	@GetMapping("/users")
+	public ResponseEntity getUsers(){
+		List<User> userList = (List<User>) this.userService.lookup();
+		log.info("User List size:" + userList.size());
+		if(userList != null && userList.size() > 0) {
+			return new ResponseEntity<Iterable<User>>(userList, HttpStatus.OK);
+		}else {
+			return new ResponseEntity<String>(Constants.RESPONSE_MSG_NO_DATA_FOUND, HttpStatus.OK);
+		}
     }
 	
-	@GetMapping("/userDetails/{userID}")
-    public Optional<StoreUser> getUserById(String userIdReq){
-		long userId = Long.valueOf(userIdReq);
-		return userService.findById(userId);
+	@GetMapping("/users/{userID}")
+    public ResponseEntity getUserById(@Validated String userIdReq){
+		Optional<User> user = userService.findById(Long.valueOf(userIdReq));
+		if(user != null) {
+			return new ResponseEntity<Optional<User>>(user, HttpStatus.OK);
+		}else {
+			return new ResponseEntity<String>(Constants.RESPONSE_MSG_NO_DATA_FOUND, HttpStatus.OK);
+		}
     }
-	
-	@PostMapping("/generateBillAmount")
-    public BillAmount generateBillAmount(@RequestBody Bill bill){
-        return this.billProcessingService.processBill(bill);
-    }
-	
-	@PostMapping("/createNewItem")
-    public ItemQuantity createNewItem(@RequestBody ItemQuantity item){
-        return this.itemInventoryService.createItemInventory(item.getItemId(), item.getName(), item.getPrice(), item.getQuantity(), item .getType());
+
+	@PostMapping("/createProduct")
+    public ResponseEntity<String> createNewProduct(@RequestBody ItemQuantity item){
+        ItemQuantity product = this.itemInventoryService.createItemInventory(item.getItemId(), item.getName(), item.getPrice(), item.getQuantity(), item .getType());
+        if(product != null) {
+            return new ResponseEntity<String>(Constants.RESPONSE_PRODUCT_CREATED, HttpStatus.OK);
+        }else {
+            return new ResponseEntity<String>(Constants.RESPONSE_PRODUCT_CREATED_FAILED, HttpStatus.OK);
+        }
     }
 	
 	@PostMapping("/createNewItemAPI")
@@ -77,7 +89,12 @@ public class OrderWebService {
 		ItemQuantity result = itemInventoryService.save(item);
 		return ResponseEntity.ok().body(result);
 	}
-
+	
+	@PostMapping("/generateBillAmount")
+    public BillAmount generateBillAmount(@RequestBody Bill bill){
+        return this.billProcessingService.processBill(bill);
+    }
+	
 	@PutMapping("/items/{itemId}/details")
 	public ItemQuantity updateWithPut(@PathVariable(value = "itemId") String itemId, @RequestBody @Validated ItemQuantity itemRequest) {
 		ItemQuantity item = verifyItem(itemId, itemRequest.getName());
@@ -104,14 +121,14 @@ public class OrderWebService {
     @DeleteMapping(path = "deleteUser/{userId}")
     public void delete(@PathVariable(value = "userId") String userId) {
     	try {
-    		StoreUser user = verifyUser(userId);
+    		User user = verifyUser(userId);
         	userService.delete(user);
     	}catch(NoSuchElementException e) {
     		System.out.println("User does not exist");
     	}
     }
     
-    private StoreUser verifyUser(String userIdReq) throws NoSuchElementException {
+    private User verifyUser(String userIdReq) throws NoSuchElementException {
     	long userId = Long.valueOf(userIdReq);
 		return userService.findById(userId).orElseThrow(() -> new NoSuchElementException("User for request("+ userId));
 	}

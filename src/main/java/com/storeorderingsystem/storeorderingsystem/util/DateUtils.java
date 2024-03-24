@@ -3,9 +3,7 @@ package com.storeorderingsystem.storeorderingsystem.util;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -31,9 +29,9 @@ public class DateUtils {
     public static boolean isDateGreatThanTwoYears(Date date){
     	
  
-    	GregorianCalendar calToday = new GregorianCalendar();
-    	GregorianCalendar twoYearAgoTodayAtMidnight = new GregorianCalendar(calToday.get(Calendar.YEAR) - 2, 
-    			calToday.get(Calendar.MONTH), calToday.get(Calendar.DATE));
+    	//GregorianCalendar calToday = new GregorianCalendar();
+    	//GregorianCalendar twoYearAgoTodayAtMidnight = new GregorianCalendar(calToday.get(Calendar.YEAR) - 2, 
+    		//	calToday.get(Calendar.MONTH), calToday.get(Calendar.DATE));
     	return true;
      }
     

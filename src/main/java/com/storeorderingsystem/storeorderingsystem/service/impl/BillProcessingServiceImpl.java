@@ -8,12 +8,11 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.storeorderingsystem.storeorderingsystem.model.BillAmount;
+import com.storeorderingsystem.storeorderingsystem.model.User;
 import com.storeorderingsystem.storeorderingsystem.repository.Bill;
 import com.storeorderingsystem.storeorderingsystem.repository.BillRepository;
 import com.storeorderingsystem.storeorderingsystem.repository.ItemQuantity;
-import com.storeorderingsystem.storeorderingsystem.repository.ItemQuantityRepository;
-import com.storeorderingsystem.storeorderingsystem.repository.StoreUser;
-import com.storeorderingsystem.storeorderingsystem.repository.StoreUserRepository;
+import com.storeorderingsystem.storeorderingsystem.repository.UserRepository;
 import com.storeorderingsystem.storeorderingsystem.service.BillProcessingService;
 import com.storeorderingsystem.storeorderingsystem.util.Constants;
 import com.storeorderingsystem.storeorderingsystem.util.DateUtils;
@@ -22,13 +21,14 @@ import com.storeorderingsystem.storeorderingsystem.util.DateUtils;
 public class BillProcessingServiceImpl implements BillProcessingService{
 
 	private BillRepository billRepository;
-	private StoreUserRepository  storeUserRepository;
-	private ItemQuantityRepository  itemQuantityRepository;
+	private UserRepository  storeUserRepository;
+	//private ItemQuantityRepository  itemQuantityRepository;
 	
-	public BillProcessingServiceImpl(BillRepository billRepository, ItemQuantityRepository itemQuantityRepository,
-			StoreUserRepository storeUserRepository) {
+	public BillProcessingServiceImpl(
+			BillRepository billRepository/* , ItemQuantityRepository itemQuantityRepository */,
+			UserRepository storeUserRepository) {
 		this.billRepository = billRepository;
-		this.itemQuantityRepository = itemQuantityRepository;
+		//this.itemQuantityRepository = itemQuantityRepository;
 		this.storeUserRepository = storeUserRepository;
 	}
 
@@ -39,20 +39,20 @@ public class BillProcessingServiceImpl implements BillProcessingService{
         double price = 0.0;
         double billAmount = 0.0;
         double discountAmt = 0.0;
-        String userType = Constants.USER_TYPE_CUSTOMER;
+        String userType = Constants.USER_ROLE_CUSTOMER;
         Date joiningDate = new Date();
         List<ItemQuantity> itemRepositoryList = new ArrayList<ItemQuantity>();
-        StoreUser user = null;
+        User user = null;
         
         if(billInfo!= null && (billInfo.getStoreUserId() != null)) {
         	if(billInfo.getStoreUserId() != null) {	
-        		Optional<StoreUser> optionalStoreUser = storeUserRepository.findById(Long.valueOf(billInfo.getStoreUserId()));
+        		Optional<User> optionalStoreUser = storeUserRepository.findById(Long.valueOf(billInfo.getStoreUserId()));
         		if(optionalStoreUser != null && optionalStoreUser.isPresent()) {
         			user = optionalStoreUser.get();
         		}
         		if(user!= null) {
-        			if(user.getUserType() != null) {
-            			userType = user.getUserType();        				
+        			if(user.getRole() != null) {
+            			userType = user.getRole();        				
         			}
         			if(user.getJoiningDate() != null) {
             			joiningDate = DateUtils.createDateFromDateString(user.getJoiningDate());        				
@@ -125,11 +125,11 @@ public class BillProcessingServiceImpl implements BillProcessingService{
 		if(userType != null) {
 			
 			if(!itemType.equalsIgnoreCase(Constants.ITEM_TYPE_GROCERIES)) {
-				if(userType.equalsIgnoreCase(Constants.USER_TYPE_EMPLOYEE) ) {
+				if(userType.equalsIgnoreCase(Constants.USER_ROLE_ADMIN) ) {
 					discountAmount = calculateDiscountAmount(Constants.USER_TYPE_EMPLOYEE_DISCOUNT_PERCENT, billAmount);
 					discountApplied = true;
 					
-				}else if(userType.equalsIgnoreCase(Constants.USER_TYPE_AFFILIATE)){
+				}else if(userType.equalsIgnoreCase(Constants.USER_ROLE_AFFILIATE)){
 					discountAmount = calculateDiscountAmount(Constants.USER_TYPE_AFFILIATE_DISCOUNT_PERCENT, billAmount);
 					discountApplied = true;
 				
@@ -154,7 +154,7 @@ public class BillProcessingServiceImpl implements BillProcessingService{
     }	
 	
     @Override
-    public Iterable<Bill> lookup(){
+    public Iterable<com.storeorderingsystem.storeorderingsystem.repository.Bill> lookup(){
         return billRepository.findAll();
     }
 

@@ -4,25 +4,25 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.storeorderingsystem.storeorderingsystem.repository.StoreUser;
-import com.storeorderingsystem.storeorderingsystem.repository.StoreUserRepository;
+import com.storeorderingsystem.storeorderingsystem.model.User;
+import com.storeorderingsystem.storeorderingsystem.repository.UserRepository;
 import com.storeorderingsystem.storeorderingsystem.service.UserService;
 
 @Service
 public class UserServiceImpl implements UserService{
-    private StoreUserRepository storeUserRepository;
+    private UserRepository storeUserRepository;
 
-    public UserServiceImpl(StoreUserRepository storeUserRepository) {
+    public UserServiceImpl(UserRepository storeUserRepository) {
         this.storeUserRepository = storeUserRepository;
     }
 
     @Override
-    public Iterable<StoreUser> lookup(){
+    public Iterable<User> lookup(){
         return storeUserRepository.findAll();
     }
 
     @Override
-    public Optional<StoreUser> findById(long id){
+    public Optional<User> findById(long id){
     	return storeUserRepository.findById(id);
     }
     
@@ -32,13 +32,13 @@ public class UserServiceImpl implements UserService{
     }
 
 	@Override
-	public StoreUser createStoreUser(long id, String userType, String firstName, String lastName, String emailId, long phoneNumber) {
-        return storeUserRepository.findById(id).orElse(
-        		storeUserRepository.save(new StoreUser(id, userType, firstName, lastName, emailId, phoneNumber)));   
+	public User createStoreUser(long userId, String role, String firstName, String lastName, String username, String password, String emailId, long phoneNumber) {
+        return storeUserRepository.findById(userId).orElse(
+        		storeUserRepository.save(new User(userId, role, firstName, lastName, firstName, password, emailId, phoneNumber)));
 	}
 
 	@Override
-	public void delete(StoreUser user){
+	public void delete(User user){
 		storeUserRepository.delete(user);
 	}
 }

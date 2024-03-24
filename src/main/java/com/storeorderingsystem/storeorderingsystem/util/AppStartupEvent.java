@@ -1,28 +1,26 @@
 package com.storeorderingsystem.storeorderingsystem.util;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 
-import com.storeorderingsystem.storeorderingsystem.repository.StoreUser;
-import com.storeorderingsystem.storeorderingsystem.repository.StoreUserRepository;
-import com.storeorderingsystem.storeorderingsystem.service.BillProcessingService;
+import com.storeorderingsystem.storeorderingsystem.model.User;
+import com.storeorderingsystem.storeorderingsystem.repository.UserRepository;
 
 public class AppStartupEvent implements ApplicationListener<ApplicationReadyEvent>{
 
-	@Autowired
-	private BillProcessingService billProcessor;
+	//@Autowired
+	//private BillProcessingService billProcessor;
 	
-	private final StoreUserRepository storeUserRepository;
+	private final UserRepository storeUserRepository;
 	
-	public AppStartupEvent(StoreUserRepository storeUserRepository) {
+	public AppStartupEvent(UserRepository storeUserRepository) {
 		this.storeUserRepository = storeUserRepository;
 	} 
 	
 	@Override
 	public void onApplicationEvent(ApplicationReadyEvent event) {
 		// TODO Auto-generated method stub
-		Iterable<StoreUser> storeUsers = this.storeUserRepository.findAll();
+		Iterable<User> storeUsers = this.storeUserRepository.findAll();
 		storeUsers.forEach(System.out::println);
 		
 	}
