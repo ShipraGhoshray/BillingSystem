@@ -1,4 +1,4 @@
-package com.storeorderingsystem.storeorderingsystem.authentication;
+package com.storeorderingsystem.storeorderingsystem.authentication.jwt;
 
 import java.security.Key;
 import java.util.Date;
@@ -7,7 +7,9 @@ import java.util.Map;
 import java.util.function.Function;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import com.storeorderingsystem.storeorderingsystem.util.SecurityConstants;
+
+import com.storeorderingsystem.storeorderingsystem.authentication.util.SecurityConstants;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;

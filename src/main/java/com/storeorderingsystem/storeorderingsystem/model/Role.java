@@ -25,6 +25,13 @@ public class Role {
 	@ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
     private List<User> users;
 
+	public Role() { }
+	
+	public Role(int roleId, String name , List<User> users) {
+		this.role_id = roleId;
+	    this.name = name;
+	}
+	
 	public int getRoleId() {
 		return role_id;
 	}

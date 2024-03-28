@@ -27,7 +27,7 @@ import com.storeorderingsystem.storeorderingsystem.model.BillAmount;
 import com.storeorderingsystem.storeorderingsystem.model.User;
 import com.storeorderingsystem.storeorderingsystem.repository.ItemQuantity;
 import com.storeorderingsystem.storeorderingsystem.service.BillProcessingService;
-import com.storeorderingsystem.storeorderingsystem.service.ItemInventoryService;
+import com.storeorderingsystem.storeorderingsystem.service.ProductsService;
 import com.storeorderingsystem.storeorderingsystem.service.UserService;
 import com.storeorderingsystem.storeorderingsystem.util.Constants;
 
@@ -40,9 +40,9 @@ public class OrderController {
 	
 	private final UserService userService;
 	private final BillProcessingService billProcessingService;
-	private final ItemInventoryService itemInventoryService;
+	private final ProductsService itemInventoryService;
 	
-	public OrderController(UserService userService, BillProcessingService billProcessingService, ItemInventoryService itemInventoryService) {
+	public OrderController(UserService userService, BillProcessingService billProcessingService, ProductsService itemInventoryService) {
 		this.userService = userService;
 		this.billProcessingService = billProcessingService;
 		this.itemInventoryService = itemInventoryService;
@@ -74,7 +74,7 @@ public class OrderController {
 		}
     }
 
-	@PostMapping("/createProduct")
+	@PostMapping("/products")
     public ResponseEntity<String> createNewProduct(@RequestBody ItemQuantity item){
         ItemQuantity product = this.itemInventoryService.createItemInventory(item.getItemId(), item.getName(), item.getPrice(), item.getQuantity(), item .getType());
         if(product != null) {

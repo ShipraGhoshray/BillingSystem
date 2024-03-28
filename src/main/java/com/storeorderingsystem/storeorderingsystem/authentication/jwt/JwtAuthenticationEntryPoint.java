@@ -1,4 +1,4 @@
-package com.storeorderingsystem.storeorderingsystem.authentication;
+package com.storeorderingsystem.storeorderingsystem.authentication.jwt;
 
 import java.io.IOException;
 import org.springframework.security.core.AuthenticationException;

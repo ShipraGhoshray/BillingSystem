@@ -1,4 +1,4 @@
-package com.storeorderingsystem.storeorderingsystem.model;
+package com.storeorderingsystem.storeorderingsystem.authentication.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,7 +13,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Builder
 @ToString
-public class JwtResponse {
+public class JwtLoginResponse {
 	
 	private String jwtToken;
 	private String username;
@@ -32,6 +32,6 @@ public class JwtResponse {
 	}
 	public static Object builder() {
 		// TODO Auto-generated method stub
-		return new JwtResponse();
+		return new JwtLoginResponse();
 	}
 }

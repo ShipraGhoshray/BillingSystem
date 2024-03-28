@@ -15,6 +15,7 @@ public class Constants {
 	public static final int USER_TYPE_2YEAR_DISCOUNT_PERCENT = 5;
 	
 	public static final String EMPTY_STRING = "";
+	public static final String RESPONSE_MSG_SUCCESS = "Success!";
 	public static final String RESPONSE_MSG_NO_DATA_FOUND = "NO Data Found";
 	public static final String RESPONSE_PRODUCT_CREATED = "Product Created";
 	public static final String RESPONSE_PRODUCT_CREATED_FAILED = "Unable to create Product";

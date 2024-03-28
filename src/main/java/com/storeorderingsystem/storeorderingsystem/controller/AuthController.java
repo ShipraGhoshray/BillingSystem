@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.storeorderingsystem.storeorderingsystem.authentication.JWTGenerator;
-import com.storeorderingsystem.storeorderingsystem.model.JwtRequest;
-import com.storeorderingsystem.storeorderingsystem.model.JwtResponse;
+import com.storeorderingsystem.storeorderingsystem.authentication.dto.JwtLoginRequest;
+import com.storeorderingsystem.storeorderingsystem.authentication.dto.JwtLoginResponse;
+import com.storeorderingsystem.storeorderingsystem.authentication.jwt.JWTGenerator;
 
 @RestController
 @RequestMapping("/auth")
@@ -35,14 +35,14 @@ public class AuthController {
 	}
 	
 	@PostMapping("/login")
-    public ResponseEntity<JwtResponse> login(@RequestBody JwtRequest request) {
+    public ResponseEntity<JwtLoginResponse> login(@RequestBody JwtLoginRequest request) {
 
         this.doAuthenticate(request.getUsername(), request.getPassword());
         UserDetails userDetails = userDetailService.loadUserByUsername(request.getUsername());
         String token = this.jwtTokenGenerator.generateToken(userDetails);
         
         //JwtResponse response = JwtResponse.builder().jwtToken(token).username(userDetails.getUsername()).build();
-        JwtResponse response = new JwtResponse();
+        JwtLoginResponse response = new JwtLoginResponse();
         response.setJwtToken(token);
         response.setUsername(userDetails.getUsername());
         return new ResponseEntity<>(response, HttpStatus.OK);

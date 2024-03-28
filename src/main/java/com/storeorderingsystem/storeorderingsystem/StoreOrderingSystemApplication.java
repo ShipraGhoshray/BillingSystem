@@ -6,7 +6,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.storeorderingsystem.storeorderingsystem.service.impl.ItemInventoryServiceImpl;
+import com.storeorderingsystem.storeorderingsystem.authentication.service.impl.RoleServiceImpl;
+import com.storeorderingsystem.storeorderingsystem.service.impl.ProductsServiceImpl;
 import com.storeorderingsystem.storeorderingsystem.service.impl.UserServiceImpl;
 import com.storeorderingsystem.storeorderingsystem.util.Constants;
 
@@ -14,12 +15,15 @@ import com.storeorderingsystem.storeorderingsystem.util.Constants;
 public class StoreOrderingSystemApplication implements CommandLineRunner{
 
 	private final UserServiceImpl userService;
-    private final ItemInventoryServiceImpl itemInventoryService;
+    private final ProductsServiceImpl productsService;
+    private final RoleServiceImpl roleService;
     private final PasswordEncoder passwordEncoder;
     
-    public StoreOrderingSystemApplication(PasswordEncoder passwordEncoder, ItemInventoryServiceImpl itemInventoryService, UserServiceImpl userService) {
+    public StoreOrderingSystemApplication(PasswordEncoder passwordEncoder, ProductsServiceImpl productsService, 
+    		RoleServiceImpl roleService, UserServiceImpl userService) {
     	this.passwordEncoder = passwordEncoder;
-    	this.itemInventoryService = itemInventoryService;
+    	this.productsService = productsService;
+    	this.roleService = roleService;
     	this.userService = userService;
     }
     
@@ -52,12 +56,19 @@ public class StoreOrderingSystemApplication implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		createInventory();
+		addRoles();
 		createUsers();
-		long inventoryCount = itemInventoryService.total();
+		long inventoryCount = productsService.total();
 		System.out.println("Total inventory in the system is : "+ inventoryCount);
 		
 		long userCount = userService.total();
 		System.out.println("Total users in the system is : "+ userCount);
+	}
+	
+	private void addRoles() {
+				roleService.addRole(1L, "ADMIN", null);
+				roleService.addRole(2L, "USER", null);
+				roleService.addRole(3L, "AFFILIATE", null);
 	}
 	
 	private void createUsers() {
@@ -69,13 +80,13 @@ public class StoreOrderingSystemApplication implements CommandLineRunner{
 	}
 
 	private void createInventory(){
-		itemInventoryService.createItemInventory(1L, "Bread", 10, 5, Constants.ITEM_TYPE_GROCERIES);
-		itemInventoryService.createItemInventory(2L, "Eggs", 10, 2, Constants.ITEM_TYPE_GROCERIES);
-		itemInventoryService.createItemInventory(3L, "Milk", 10, 1, Constants.ITEM_TYPE_GROCERIES);
-		itemInventoryService.createItemInventory(4L, "Chicken", 1, 5, Constants.ITEM_TYPE_GROCERIES);
-		itemInventoryService.createItemInventory(5L, "Garbage Bags", 3, 5, Constants.ITEM_TYPE_UTILITIES);
-		itemInventoryService.createItemInventory(6L, "Shampoo", 10, 1, Constants.ITEM_TYPE_UTILITIES);
-		itemInventoryService.createItemInventory(7L, "Stapler", 10, 1, Constants.ITEM_TYPE_STATIONARY);
+		productsService.createItemInventory(1L, "Bread", 10, 5, Constants.ITEM_TYPE_GROCERIES);
+		productsService.createItemInventory(2L, "Eggs", 10, 2, Constants.ITEM_TYPE_GROCERIES);
+		productsService.createItemInventory(3L, "Milk", 10, 1, Constants.ITEM_TYPE_GROCERIES);
+		productsService.createItemInventory(4L, "Chicken", 1, 5, Constants.ITEM_TYPE_GROCERIES);
+		productsService.createItemInventory(5L, "Garbage Bags", 3, 5, Constants.ITEM_TYPE_UTILITIES);
+		productsService.createItemInventory(6L, "Shampoo", 10, 1, Constants.ITEM_TYPE_UTILITIES);
+		productsService.createItemInventory(7L, "Stapler", 10, 1, Constants.ITEM_TYPE_STATIONARY);
 	}
 }
 	

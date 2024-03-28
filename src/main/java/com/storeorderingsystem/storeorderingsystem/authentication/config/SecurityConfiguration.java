@@ -1,4 +1,4 @@
-package com.storeorderingsystem.storeorderingsystem.config;
+package com.storeorderingsystem.storeorderingsystem.authentication.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,8 +10,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.storeorderingsystem.storeorderingsystem.authentication.JWTAuthenticationFilter;
-import com.storeorderingsystem.storeorderingsystem.authentication.JwtAuthenticationEntryPoint;
+import com.storeorderingsystem.storeorderingsystem.authentication.jwt.JWTAuthenticationFilter;
+import com.storeorderingsystem.storeorderingsystem.authentication.jwt.JwtAuthenticationEntryPoint;
 
 
 @Configuration
@@ -32,8 +32,10 @@ public class SecurityConfiguration {
 		http.csrf(csrf -> csrf.disable())
 			.cors(cors -> cors.disable())
 			.authorizeHttpRequests(authorize -> { authorize
-				.requestMatchers(HttpMethod.POST, "/api/createProduct").hasRole("ADMIN")
-         		.requestMatchers(HttpMethod.GET, "/api/*").permitAll()
+				.requestMatchers(HttpMethod.POST, "/api/products").hasRole("ADMIN")
+				.requestMatchers(HttpMethod.DELETE, "/auth/users/**").hasRole("ADMIN")
+				.requestMatchers(HttpMethod.GET, "/api/users").permitAll()
+				.requestMatchers(HttpMethod.GET, "/api/users/**").permitAll()
          		.requestMatchers("/auth/login").permitAll()
          		.requestMatchers("/auth/*").permitAll()
 				.anyRequest().authenticated();

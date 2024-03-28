@@ -1,4 +1,4 @@
-package com.storeorderingsystem.storeorderingsystem.config;
+package com.storeorderingsystem.storeorderingsystem.authentication.config;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,7 +21,7 @@ import com.storeorderingsystem.storeorderingsystem.model.Role;
 import com.storeorderingsystem.storeorderingsystem.repository.UserRepository;
 
 @Service
-public class CustomUserDetailsService /* implements UserDetailsService */ {
+public class CustomUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -32,15 +32,8 @@ public class CustomUserDetailsService /* implements UserDetailsService */ {
         this.userRepository = userRepository;
     }
     
-	@Bean
-	public UserDetailsService users() {
-    //@Override
-    //public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
-    	
-        ArrayList<GrantedAuthority> roles = new ArrayList<GrantedAuthority>(); 
-        roles.add(new SimpleGrantedAuthority("ADMIN")); 
-        roles.add(new SimpleGrantedAuthority("USER")); 
-        
+	/*@Bean
+	public UserDetailsService users() {        
     	UserDetails inMemoryAdmin = User.builder()
 				.username("joey")
 				.password(passwordEncoder.encode("password"))
@@ -51,14 +44,21 @@ public class CustomUserDetailsService /* implements UserDetailsService */ {
 				.password(passwordEncoder.encode("password"))
 				.roles("USER")
 				.build();
-    	//com.storeorderingsystem.storeorderingsystem.model.User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Username not found"));		
     	return new InMemoryUserDetailsManager(inMemoryAdmin, inMemoryUser);
-//    	return new User(user.getUsername(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
-    }
+    }*/
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
+        	
+      	com.storeorderingsystem.storeorderingsystem.model.User user = 
+    	userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Username not found"));	
+      	return new User(user.getUsername(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
+    }
+    
     private Collection<GrantedAuthority> mapRolesToAuthorities(List<Role> roles) {
     	
     	Collection<GrantedAuthority> coll = roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
     }
+    
 }

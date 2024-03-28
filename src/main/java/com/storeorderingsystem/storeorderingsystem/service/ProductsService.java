@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import com.storeorderingsystem.storeorderingsystem.repository.ItemQuantity;
 
 @Service
-public interface ItemInventoryService{
+public interface ProductsService{
 
 	public ItemQuantity createItemInventory(long itemId, String name, int price, int quantity, String type);
 	public Iterable<ItemQuantity> lookup();

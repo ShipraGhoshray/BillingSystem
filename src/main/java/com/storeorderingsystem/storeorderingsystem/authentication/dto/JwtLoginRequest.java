@@ -1,4 +1,4 @@
-package com.storeorderingsystem.storeorderingsystem.model;
+package com.storeorderingsystem.storeorderingsystem.authentication.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,7 +13,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Builder
 @ToString
-public class JwtRequest {
+public class JwtLoginRequest {
 
 	private String username;
 	private String password;

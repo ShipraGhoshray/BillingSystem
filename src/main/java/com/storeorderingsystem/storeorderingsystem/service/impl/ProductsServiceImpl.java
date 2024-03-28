@@ -6,13 +6,13 @@ import org.springframework.stereotype.Service;
 
 import com.storeorderingsystem.storeorderingsystem.repository.ItemQuantity;
 import com.storeorderingsystem.storeorderingsystem.repository.ItemQuantityRepository;
-import com.storeorderingsystem.storeorderingsystem.service.ItemInventoryService;
+import com.storeorderingsystem.storeorderingsystem.service.ProductsService;
 
 @Service
-public class ItemInventoryServiceImpl implements ItemInventoryService{
+public class ProductsServiceImpl implements ProductsService{
     private ItemQuantityRepository itemQuantityRepository;
 
-    public ItemInventoryServiceImpl(ItemQuantityRepository itemQuantityRepository) {
+    public ProductsServiceImpl(ItemQuantityRepository itemQuantityRepository) {
         this.itemQuantityRepository = itemQuantityRepository;
     }
 
