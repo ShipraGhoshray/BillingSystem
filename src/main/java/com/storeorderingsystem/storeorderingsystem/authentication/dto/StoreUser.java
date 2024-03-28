@@ -1,4 +1,4 @@
-package com.storeorderingsystem.storeorderingsystem.model;
+package com.storeorderingsystem.storeorderingsystem.authentication.dto;
 
 public class StoreUser {
 	

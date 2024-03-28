@@ -17,8 +17,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.stereotype.Service;
 
-import com.storeorderingsystem.storeorderingsystem.model.Role;
-import com.storeorderingsystem.storeorderingsystem.repository.UserRepository;
+import com.storeorderingsystem.storeorderingsystem.authentication.model.Role;
+import com.storeorderingsystem.storeorderingsystem.authentication.repository.UserRepository;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
@@ -50,7 +50,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
         	
-      	com.storeorderingsystem.storeorderingsystem.model.User user = 
+      	com.storeorderingsystem.storeorderingsystem.authentication.model.User user = 
     	userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Username not found"));	
       	return new User(user.getUsername(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
     }

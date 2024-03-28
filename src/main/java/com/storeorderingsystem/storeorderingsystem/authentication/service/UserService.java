@@ -1,10 +1,10 @@
-package com.storeorderingsystem.storeorderingsystem.service;
+package com.storeorderingsystem.storeorderingsystem.authentication.service;
 
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.storeorderingsystem.storeorderingsystem.model.User;
+import com.storeorderingsystem.storeorderingsystem.authentication.model.User;
 
 @Service
 public interface UserService{

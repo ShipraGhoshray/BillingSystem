@@ -1,4 +1,4 @@
-package com.storeorderingsystem.storeorderingsystem.repository;
+package com.storeorderingsystem.storeorderingsystem.products.repository;
 
 import org.springframework.data.repository.CrudRepository;
 

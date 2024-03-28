@@ -5,8 +5,8 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.storeorderingsystem.storeorderingsystem.model.Role;
-import com.storeorderingsystem.storeorderingsystem.model.User;
+import com.storeorderingsystem.storeorderingsystem.authentication.model.Role;
+import com.storeorderingsystem.storeorderingsystem.authentication.model.User;
 import com.storeorderingsystem.storeorderingsystem.authentication.repository.RoleRepository;
 import com.storeorderingsystem.storeorderingsystem.authentication.service.RoleService;
 

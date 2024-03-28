@@ -1,4 +1,4 @@
-package com.storeorderingsystem.storeorderingsystem.model;
+package com.storeorderingsystem.storeorderingsystem.products.model;
 
 public class ItemQuantity {
 

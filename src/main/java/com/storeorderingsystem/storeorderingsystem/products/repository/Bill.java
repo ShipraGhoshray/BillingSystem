@@ -1,4 +1,4 @@
-package com.storeorderingsystem.storeorderingsystem.repository;
+package com.storeorderingsystem.storeorderingsystem.products.repository;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

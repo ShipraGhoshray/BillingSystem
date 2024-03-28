@@ -1,8 +1,9 @@
-package com.storeorderingsystem.storeorderingsystem.service;
+package com.storeorderingsystem.storeorderingsystem.products.service;
 
 import java.util.Optional;
 import org.springframework.stereotype.Service;
-import com.storeorderingsystem.storeorderingsystem.repository.ItemQuantity;
+
+import com.storeorderingsystem.storeorderingsystem.products.repository.ItemQuantity;
 
 @Service
 public interface ProductsService{

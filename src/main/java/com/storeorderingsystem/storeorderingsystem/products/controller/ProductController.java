@@ -1,4 +1,4 @@
-package com.storeorderingsystem.storeorderingsystem.controller;
+package com.storeorderingsystem.storeorderingsystem.products.controller;
 
 import java.net.URISyntaxException;
 import java.util.Collection;
@@ -22,27 +22,27 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.storeorderingsystem.storeorderingsystem.model.Bill;
-import com.storeorderingsystem.storeorderingsystem.model.BillAmount;
-import com.storeorderingsystem.storeorderingsystem.model.User;
-import com.storeorderingsystem.storeorderingsystem.repository.ItemQuantity;
-import com.storeorderingsystem.storeorderingsystem.service.BillProcessingService;
-import com.storeorderingsystem.storeorderingsystem.service.ProductsService;
-import com.storeorderingsystem.storeorderingsystem.service.UserService;
+import com.storeorderingsystem.storeorderingsystem.authentication.model.User;
+import com.storeorderingsystem.storeorderingsystem.authentication.service.UserService;
+import com.storeorderingsystem.storeorderingsystem.products.model.Bill;
+import com.storeorderingsystem.storeorderingsystem.products.model.BillAmount;
+import com.storeorderingsystem.storeorderingsystem.products.repository.ItemQuantity;
+import com.storeorderingsystem.storeorderingsystem.products.service.BillProcessingService;
+import com.storeorderingsystem.storeorderingsystem.products.service.ProductsService;
 import com.storeorderingsystem.storeorderingsystem.util.Constants;
 
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = "http://localhost:3000")
-public class OrderController {
+public class ProductController {
 	
-	Logger log = LoggerFactory.getLogger(OrderController.class);
+	Logger log = LoggerFactory.getLogger(ProductController.class);
 	
 	private final UserService userService;
 	private final BillProcessingService billProcessingService;
 	private final ProductsService itemInventoryService;
 	
-	public OrderController(UserService userService, BillProcessingService billProcessingService, ProductsService itemInventoryService) {
+	public ProductController(UserService userService, BillProcessingService billProcessingService, ProductsService itemInventoryService) {
 		this.userService = userService;
 		this.billProcessingService = billProcessingService;
 		this.itemInventoryService = itemInventoryService;

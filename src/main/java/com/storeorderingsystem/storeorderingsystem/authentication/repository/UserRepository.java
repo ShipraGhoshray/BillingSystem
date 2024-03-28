@@ -1,10 +1,10 @@
-package com.storeorderingsystem.storeorderingsystem.repository;
+package com.storeorderingsystem.storeorderingsystem.authentication.repository;
 
 import java.util.Optional;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.storeorderingsystem.storeorderingsystem.model.User;
+import com.storeorderingsystem.storeorderingsystem.authentication.model.User;
 
 public interface UserRepository extends CrudRepository<User, Long>{
 

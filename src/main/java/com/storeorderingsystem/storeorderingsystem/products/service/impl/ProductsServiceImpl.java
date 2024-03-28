@@ -1,18 +1,18 @@
-package com.storeorderingsystem.storeorderingsystem.service.impl;
+package com.storeorderingsystem.storeorderingsystem.products.service.impl;
 
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.storeorderingsystem.storeorderingsystem.repository.ItemQuantity;
-import com.storeorderingsystem.storeorderingsystem.repository.ItemQuantityRepository;
-import com.storeorderingsystem.storeorderingsystem.service.ProductsService;
+import com.storeorderingsystem.storeorderingsystem.products.repository.ItemQuantity;
+import com.storeorderingsystem.storeorderingsystem.products.repository.ProductsRepository;
+import com.storeorderingsystem.storeorderingsystem.products.service.ProductsService;
 
 @Service
 public class ProductsServiceImpl implements ProductsService{
-    private ItemQuantityRepository itemQuantityRepository;
+    private ProductsRepository itemQuantityRepository;
 
-    public ProductsServiceImpl(ItemQuantityRepository itemQuantityRepository) {
+    public ProductsServiceImpl(ProductsRepository itemQuantityRepository) {
         this.itemQuantityRepository = itemQuantityRepository;
     }
 

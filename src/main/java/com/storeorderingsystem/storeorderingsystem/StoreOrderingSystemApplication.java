@@ -7,8 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.storeorderingsystem.storeorderingsystem.authentication.service.impl.RoleServiceImpl;
-import com.storeorderingsystem.storeorderingsystem.service.impl.ProductsServiceImpl;
-import com.storeorderingsystem.storeorderingsystem.service.impl.UserServiceImpl;
+import com.storeorderingsystem.storeorderingsystem.authentication.service.impl.UserServiceImpl;
+import com.storeorderingsystem.storeorderingsystem.products.service.impl.ProductsServiceImpl;
 import com.storeorderingsystem.storeorderingsystem.util.Constants;
 
 @SpringBootApplication

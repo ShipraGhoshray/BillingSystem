@@ -1,4 +1,4 @@
-package com.storeorderingsystem.storeorderingsystem.controller;
+package com.storeorderingsystem.storeorderingsystem.authentication.controller;
 
 import java.security.Principal;
 
