@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.storeorderingsystem.storeorderingsystem.products.repository.ItemQuantity;
+import com.storeorderingsystem.storeorderingsystem.products.model.ItemQuantity;
 import com.storeorderingsystem.storeorderingsystem.products.repository.ProductsRepository;
 import com.storeorderingsystem.storeorderingsystem.products.service.ProductsService;
 

@@ -8,6 +8,14 @@ import org.springframework.http.ResponseEntity;
 
 public class ResponseHandler {
 
+	public static ResponseEntity<JwtLoginResponse> generateResponse(HttpStatus status, JwtLoginResponse responseObj) {
+		return new ResponseEntity<JwtLoginResponse>(responseObj, status);
+	}
+	
+	public static ResponseEntity<String> generateResponse(HttpStatus status, String message) {
+		return new ResponseEntity<String>(message, status);
+	}
+	
 	public static ResponseEntity<Object> generateResponse(String message, HttpStatus status, Object responseObj, int count) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("message", message);

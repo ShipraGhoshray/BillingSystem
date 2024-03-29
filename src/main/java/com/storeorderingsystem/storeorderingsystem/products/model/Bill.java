@@ -1,23 +1,44 @@
 package com.storeorderingsystem.storeorderingsystem.products.model;
 
-import java.util.List;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@Entity
+@Table(name="BILL")
 public class Bill {
     
-    private String billId;
-    private String storeUserId;
-    private List<ItemQuantity> items;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "BILL_ID")
+    private long billId;
+
+	@Column(name = "STORE_USER_ID")
+    private long storeUserId;
+	
+	@Column(name = "ITEM_QUANTITY_ID")
+    private long itemsQuantityId;
+	
+	@Column(name = "CREATED_DATE")
     private long createdDate;
-    private float totalPrice;
+	
+	@Column(name = "TOTAL_PRICE")
+	private float totalPrice;
+	
+	@Column(name = "DISCOUNT_AMOUNT")
+    private double discountAmount; 
     
-	public String getBillId() {
+	@Column(name = "BILL_AMOUNT")
+    private double billAmount;
+	
+	public long getBillId() {
 		return billId;
 	}
 
-	public void setBillId(String billId) {
+	public void setBillId(long billId) {
 		this.billId = billId;
 	}
 
@@ -29,14 +50,38 @@ public class Bill {
 		this.createdDate = createdDate;
 	}
 
-	public String getStoreUserId() {
+	public double getBillAmount() {
+		return billAmount;
+	}
+
+	public void setBillAmount(double billAmount) {
+		this.billAmount = billAmount;
+	}
+
+	public long getStoreUserId() {
 		return storeUserId;
 	}
 
-	public void setStoreUserId(String storeUserId) {
+	public void setStoreUserId(long storeUserId) {
 		this.storeUserId = storeUserId;
 	}
+	
+	public long getItemsQuantityId() {
+		return itemsQuantityId;
+	}
 
+	public void setItemsQuantityId(long itemsQuantityId) {
+		this.itemsQuantityId = itemsQuantityId;
+	}
+
+	public double getDiscountAmount() {
+		return discountAmount;
+	}
+
+	public void setDiscountAmount(double discountAmount) {
+		this.discountAmount = discountAmount;
+	}
+	
 	public float getTotalPrice() {
 		return totalPrice;
 	}
@@ -45,11 +90,4 @@ public class Bill {
 		this.totalPrice = totalPrice;
 	}
 
-	public List<ItemQuantity> getItems() {
-		return items;
-	}
-
-	public void setItems(List<ItemQuantity> items) {
-		this.items = items;
-	}
 }

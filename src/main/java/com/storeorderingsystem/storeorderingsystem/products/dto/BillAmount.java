@@ -1,4 +1,4 @@
-package com.storeorderingsystem.storeorderingsystem.products.model;
+package com.storeorderingsystem.storeorderingsystem.products.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
