@@ -1,6 +1,6 @@
 package com.storeorderingsystem.storeorderingsystem.products.dto;
 
-public class ItemQuantity {
+public class ProductsDto {
 
     private String name;
     private int price;

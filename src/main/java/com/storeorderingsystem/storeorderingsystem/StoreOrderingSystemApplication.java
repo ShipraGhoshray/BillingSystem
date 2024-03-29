@@ -1,11 +1,14 @@
 
 package com.storeorderingsystem.storeorderingsystem;
 
+import java.util.List;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.storeorderingsystem.storeorderingsystem.authentication.model.Role;
 import com.storeorderingsystem.storeorderingsystem.authentication.service.impl.RoleServiceImpl;
 import com.storeorderingsystem.storeorderingsystem.authentication.service.impl.UserServiceImpl;
 import com.storeorderingsystem.storeorderingsystem.products.service.impl.ProductsServiceImpl;
@@ -66,27 +69,32 @@ public class StoreOrderingSystemApplication implements CommandLineRunner{
 	}
 	
 	private void addRoles() {
-				roleService.addRole(1L, "ADMIN", null);
-				roleService.addRole(2L, "USER", null);
-				roleService.addRole(3L, "AFFILIATE", null);
+		roleService.addRole(1L, "ADMIN", null);
+		roleService.addRole(2L, "USER", null);
+		roleService.addRole(3L, "AFFILIATE", null);
 	}
 	
 	private void createUsers() {
-		userService.createStoreUser(1L, Constants.USER_ROLE_ADMIN, "Joey", "Tribiani", "joey", passwordEncoder.encode("password") , "joey.tribiani@gmail.com", 971565678901L);
-		userService.createStoreUser(2L, Constants.USER_ROLE_AFFILIATE, "Rachel", "Green", "rachel", passwordEncoder.encode("password"), "Rachel.Green@gmail.com", 971566789012L);
+		
+		userService.createStoreUser(1L, 
+				List.of(new Role(1, Constants.USER_ROLE_ADMIN, null),
+						new Role(2, Constants.USER_ROLE_CUSTOMER, null)), 
+				"Joey", "Tribiani", "joey", passwordEncoder.encode("password") , "joey.tribiani@gmail.com", 971565678901L);
+		userService.createStoreUser(2L, List.of(new Role(1, Constants.USER_ROLE_ADMIN, null)), 
+				"Rachel", "Green", "rachel", passwordEncoder.encode("password"), "Rachel.Green@gmail.com", 971566789012L);
 		//userService.createStoreUser(3L, Constants.USER_ROLE_CUSTOMER, "Ross", "Gellar", "Ross.Gellar@gmail.com", 971567890123L);
 		//userService.createStoreUser(4L, Constants.USER_ROLE_CUSTOMER, "Monica",	"Gellar", "Monica.Gellar@gmail.com", 971568901234L);
 		//userService.createStoreUser(5L, Constants.USER_ROLE_CUSTOMER, "Chandler", "Bing", "Chandler.Bing@gmail.com", 971560123456L);
 	}
 
 	private void createInventory(){
-		productsService.createItemInventory(1L, "Bread", 10, 5, Constants.ITEM_TYPE_GROCERIES);
-		productsService.createItemInventory(2L, "Eggs", 10, 2, Constants.ITEM_TYPE_GROCERIES);
-		productsService.createItemInventory(3L, "Milk", 10, 1, Constants.ITEM_TYPE_GROCERIES);
-		productsService.createItemInventory(4L, "Chicken", 1, 5, Constants.ITEM_TYPE_GROCERIES);
-		productsService.createItemInventory(5L, "Garbage Bags", 3, 5, Constants.ITEM_TYPE_UTILITIES);
-		productsService.createItemInventory(6L, "Shampoo", 10, 1, Constants.ITEM_TYPE_UTILITIES);
-		productsService.createItemInventory(7L, "Stapler", 10, 1, Constants.ITEM_TYPE_STATIONARY);
+		productsService.createProducts(1L, "Bread", 10, 5, Constants.PRODUCT_TYPE_GROCERIES);
+		productsService.createProducts(2L, "Eggs", 10, 2, Constants.PRODUCT_TYPE_GROCERIES);
+		productsService.createProducts(3L, "Milk", 10, 1, Constants.PRODUCT_TYPE_GROCERIES);
+		productsService.createProducts(4L, "Chicken", 1, 5, Constants.PRODUCT_TYPE_GROCERIES);
+		productsService.createProducts(5L, "Garbage Bags", 3, 5, Constants.PRODUCT_TYPE_UTILITIES);
+		productsService.createProducts(6L, "Shampoo", 10, 1, Constants.PRODUCT_TYPE_UTILITIES);
+		productsService.createProducts(7L, "Stapler", 10, 1, Constants.PRODUCT_TYPE_STATIONARY);
 	}
 }
 	

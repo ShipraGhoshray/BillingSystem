@@ -19,11 +19,11 @@ public class Role {
 	@Column(name = "ROLE_ID")
     private int roleId;
     
-	@Column(name = "NAME")
+	@Column(name = "ROLE_NAME")
     private String name;
 
-	@ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
-    private List<User> users;
+	/*@ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
+    private List<User> users;*/
 
 	public Role() { }
 	

@@ -1,9 +1,11 @@
 package com.storeorderingsystem.storeorderingsystem.authentication.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.storeorderingsystem.storeorderingsystem.authentication.model.Role;
 import com.storeorderingsystem.storeorderingsystem.authentication.model.User;
 import com.storeorderingsystem.storeorderingsystem.authentication.repository.UserRepository;
 import com.storeorderingsystem.storeorderingsystem.authentication.service.UserService;
@@ -32,9 +34,9 @@ public class UserServiceImpl implements UserService{
     }
 
 	@Override
-	public User createStoreUser(long userId, String role, String firstName, String lastName, String username, String password, String emailId, long phoneNumber) {
+	public User createStoreUser(long userId, List<Role> roles, String firstName, String lastName, String username, String password, String emailId, long phoneNumber) {
         return storeUserRepository.findById(userId).orElse(
-        		storeUserRepository.save(new User(userId, role, firstName, lastName, firstName, password, emailId, phoneNumber)));
+        		storeUserRepository.save(new User(userId, roles, firstName, lastName, username, password, emailId, phoneNumber)));
 	}
 
 	@Override

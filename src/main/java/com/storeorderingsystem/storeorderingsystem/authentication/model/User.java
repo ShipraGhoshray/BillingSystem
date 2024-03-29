@@ -28,11 +28,10 @@ public class User {
 	@Column(name = "ROLE")
 	private String role;
 	
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "user_with_role", 
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinTable(name = "USER_ROLES", 
     	joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id"))
-    //@Column(name = "ROLES")
     private List<Role> roles = new ArrayList<>();
 	
 	@Column(name = "FIRST_NAME")
@@ -59,9 +58,9 @@ public class User {
 	public User() {
 	}
 	
-	public User(long userId, String role, String firstName, String lastName, String username, String password, String emailId, long phoneNumber) {
+	public User(long userId, List<Role> roles, String firstName, String lastName, String username, String password, String emailId, long phoneNumber) {
 		this.userId = userId;
-	    this.role = role;
+	    this.roles = roles;
 	    this.firstName = firstName;
 	    this.lastName = lastName;
 	    this.username = username;
@@ -172,15 +171,16 @@ public class User {
 			return false;
 		User that = (User) o;
 		return Objects.equals(userId, that.userId) && 
-				Objects.equals(role, that.role)&&
-				Objects.equals(firstName, that.firstName)&&
-				Objects.equals(lastName, that.lastName)&&
-				Objects.equals(emailId, that.emailId)&&
+				Objects.equals(roles, that.roles) &&
+				Objects.equals(firstName, that.firstName) &&
+				Objects.equals(lastName, that.lastName) &&
+				Objects.equals(username, that.username) &&
+				Objects.equals(emailId, that.emailId) &&
 				Objects.equals(phoneNumber, that.phoneNumber);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(userId, role, firstName, lastName, emailId, phoneNumber);
+		return Objects.hash(userId, roles, firstName, lastName, username, emailId, phoneNumber);
 	}
 }

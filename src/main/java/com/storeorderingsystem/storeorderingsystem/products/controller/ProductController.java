@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.storeorderingsystem.storeorderingsystem.products.dto.Bill;
-import com.storeorderingsystem.storeorderingsystem.products.dto.BillAmount;
-import com.storeorderingsystem.storeorderingsystem.products.model.ItemQuantity;
+import com.storeorderingsystem.storeorderingsystem.products.dto.BillDto;
+import com.storeorderingsystem.storeorderingsystem.products.dto.BillAmountDto;
+import com.storeorderingsystem.storeorderingsystem.products.model.Products;
 import com.storeorderingsystem.storeorderingsystem.products.service.BillProcessingService;
 import com.storeorderingsystem.storeorderingsystem.products.service.ProductsService;
 import com.storeorderingsystem.storeorderingsystem.util.Constants;
@@ -33,21 +33,21 @@ public class ProductController {
 	Logger log = LoggerFactory.getLogger(ProductController.class);
 	
 	private final BillProcessingService billProcessingService;
-	private final ProductsService itemInventoryService;
+	private final ProductsService productService;
 	
-	public ProductController(BillProcessingService billProcessingService, ProductsService itemInventoryService) {
+	public ProductController(BillProcessingService billProcessingService, ProductsService productService) {
 		this.billProcessingService = billProcessingService;
-		this.itemInventoryService = itemInventoryService;
+		this.productService = productService;
 	}
 	
 	@GetMapping("/products")
-    public Collection<ItemQuantity> getItemInventoryReact(){
-        return (Collection<ItemQuantity>) this.itemInventoryService.lookup();
+    public Collection<Products> getItemInventoryReact(){
+        return (Collection<Products>) this.productService.lookup();
     }
 	
 	@PostMapping("/products")
-    public ResponseEntity<String> createNewProduct(@Validated @RequestBody ItemQuantity item){
-        ItemQuantity product = this.itemInventoryService.createItemInventory(item.getItemId(), item.getName(), item.getPrice(), item.getQuantity(), item .getType());
+    public ResponseEntity<String> createNewProduct(@Validated @RequestBody Products productReq){
+        Products product = this.productService.createProducts(productReq.getItemId(), productReq.getName(), productReq.getPrice(), productReq.getQuantity(), productReq .getType());
         if(product != null) {
             return new ResponseEntity<String>(Constants.RESPONSE_PRODUCT_CREATED, HttpStatus.OK);
         }else {
@@ -62,28 +62,28 @@ public class ProductController {
 	}*/
 	
 	@PostMapping("/bill")
-    public BillAmount generateBillAmount(@RequestBody Bill bill){
+    public BillAmountDto generateBillAmount(@RequestBody BillDto bill){
         return this.billProcessingService.processBill(bill);
     }
 	
 	@PutMapping("/products/{productId}/details")
-	public ItemQuantity updateWithPut(@PathVariable(value = "productId") String itemId, @RequestBody @Validated ItemQuantity itemRequest) {
-		ItemQuantity item = verifyItem(itemId, itemRequest.getName());
-		item.setPrice(itemRequest.getPrice());
-		return itemInventoryService.save(item);
+	public Products updateWithPut(@PathVariable(value = "productId") String productId, @RequestBody @Validated Products productRequest) {
+		Products product = verifyProduct(productId, productRequest.getName());
+		product.setPrice(productRequest.getPrice());
+		return productService.save(product);
 	}
 
-	private ItemQuantity verifyItem(String itemIdReq, String name) throws NoSuchElementException {
-		long itemId = Long.valueOf(itemIdReq);
-		return itemInventoryService.findById(itemId, name).orElseThrow(() -> new NoSuchElementException("Item for request("+ itemId + " for name" + name));
+	private Products verifyProduct(String productIdReq, String name) throws NoSuchElementException {
+		long productId = Long.valueOf(productIdReq);
+		return productService.findById(productId, name).orElseThrow(() -> new NoSuchElementException("product for request("+ productId + " for name" + name));
 	}
 
     @PatchMapping("/products/{productId}/details")
-    public ItemQuantity updateWithPatch(@PathVariable(value = "productId") String itemId, @RequestBody @Validated ItemQuantity itemRequest) {
+    public Products updateWithPatch(@PathVariable(value = "productId") String productId, @RequestBody @Validated Products productRequest) {
     	try {
-        	ItemQuantity item = verifyItem(itemId, itemRequest.getName());
-        	item.setPrice(itemRequest.getPrice());
-        	return itemInventoryService.save(item);
+        	Products product = verifyProduct(productId, productRequest.getName());
+        	product.setPrice(productRequest.getPrice());
+        	return productService.save(product);
     	}catch(NoSuchElementException e) {
     		return null;
     	}

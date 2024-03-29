@@ -3,7 +3,7 @@ package com.storeorderingsystem.storeorderingsystem.products.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class BillAmount {
+public class BillAmountDto {
 
 	private String billId;
 	private double billAmount;

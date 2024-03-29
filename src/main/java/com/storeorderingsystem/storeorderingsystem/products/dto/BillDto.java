@@ -5,11 +5,11 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Bill {
+public class BillDto {
     
     private String billId;
     private String storeUserId;
-    private List<ItemQuantity> items;
+    private List<ProductsDto> items;
     private long createdDate;
     private float totalPrice;
     
@@ -45,11 +45,11 @@ public class Bill {
 		this.totalPrice = totalPrice;
 	}
 
-	public List<ItemQuantity> getItems() {
+	public List<ProductsDto> getItems() {
 		return items;
 	}
 
-	public void setItems(List<ItemQuantity> items) {
+	public void setItems(List<ProductsDto> items) {
 		this.items = items;
 	}
 }

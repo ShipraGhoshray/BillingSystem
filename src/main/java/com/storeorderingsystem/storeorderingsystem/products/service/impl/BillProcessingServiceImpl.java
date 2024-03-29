@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 
 import com.storeorderingsystem.storeorderingsystem.authentication.model.User;
 import com.storeorderingsystem.storeorderingsystem.authentication.repository.UserRepository;
-import com.storeorderingsystem.storeorderingsystem.products.dto.BillAmount;
+import com.storeorderingsystem.storeorderingsystem.products.dto.BillAmountDto;
 import com.storeorderingsystem.storeorderingsystem.products.model.Bill;
-import com.storeorderingsystem.storeorderingsystem.products.model.ItemQuantity;
+import com.storeorderingsystem.storeorderingsystem.products.model.Products;
 import com.storeorderingsystem.storeorderingsystem.products.repository.BillRepository;
 import com.storeorderingsystem.storeorderingsystem.products.service.BillProcessingService;
 import com.storeorderingsystem.storeorderingsystem.util.Constants;
@@ -33,7 +33,7 @@ public class BillProcessingServiceImpl implements BillProcessingService{
 	}
 
 	@Override
-	public BillAmount processBill(com.storeorderingsystem.storeorderingsystem.products.dto.Bill billInfo) {
+	public BillAmountDto processBill(com.storeorderingsystem.storeorderingsystem.products.dto.BillDto billInfo) {
 		
         System.out.println("Process Bill");
         double price = 0.0;
@@ -41,7 +41,7 @@ public class BillProcessingServiceImpl implements BillProcessingService{
         double discountAmt = 0.0;
         String userType = Constants.USER_ROLE_CUSTOMER;
         Date joiningDate = new Date();
-        List<ItemQuantity> itemRepositoryList = new ArrayList<ItemQuantity>();
+        List<Products> itemRepositoryList = new ArrayList<Products>();
         User user = null;
         
         if(billInfo!= null && (billInfo.getStoreUserId() != null)) {
@@ -60,7 +60,7 @@ public class BillProcessingServiceImpl implements BillProcessingService{
         		}
         		
         		if(billInfo.getItems()!= null && billInfo.getItems().size() > 0) {
-            		for(com.storeorderingsystem.storeorderingsystem.products.dto.ItemQuantity item:billInfo.getItems()) {
+            		for(com.storeorderingsystem.storeorderingsystem.products.dto.ProductsDto item:billInfo.getItems()) {
 
             			itemRepositoryList.add(populateItemQuantity(item));
             			price = item.getPrice() * item.getQuantity();
@@ -69,7 +69,7 @@ public class BillProcessingServiceImpl implements BillProcessingService{
             		}
             		
                 	if(Double.compare(billAmount, 0) > 0) {
-                    	BillAmount billAmountObj = getBillAmount(billInfo, billAmount); 
+                    	BillAmountDto billAmountObj = getBillAmount(billInfo, billAmount); 
                     	saveBillAndItemRepository(billInfo, billAmount, billAmount, itemRepositoryList);
                     	return billAmountObj;
                 	}
@@ -82,16 +82,16 @@ public class BillProcessingServiceImpl implements BillProcessingService{
         return null;
    }
 	
-	private BillAmount getBillAmount(com.storeorderingsystem.storeorderingsystem.products.dto.Bill billInfo, double billAmount) {
-		BillAmount billAmountObj = new BillAmount();
+	private BillAmountDto getBillAmount(com.storeorderingsystem.storeorderingsystem.products.dto.BillDto billInfo, double billAmount) {
+		BillAmountDto billAmountObj = new BillAmountDto();
 		billAmountObj.setBillId(billInfo.getBillId());
 		billAmountObj.setBillAmount(billAmount);
 		return billAmountObj;
 	}
 	
-	private ItemQuantity populateItemQuantity(com.storeorderingsystem.storeorderingsystem.products.dto.ItemQuantity item) {
+	private Products populateItemQuantity(com.storeorderingsystem.storeorderingsystem.products.dto.ProductsDto item) {
 		
-		ItemQuantity itemRepoObj = new ItemQuantity();
+		Products itemRepoObj = new Products();
 		itemRepoObj.setName(item.getName());
 		itemRepoObj.setPrice(item.getPrice());
 		itemRepoObj.setQuantity(item.getQuantity());
@@ -99,11 +99,11 @@ public class BillProcessingServiceImpl implements BillProcessingService{
 		return itemRepoObj;
 	}
 	
-	private Bill saveBillAndItemRepository(com.storeorderingsystem.storeorderingsystem.products.dto.Bill billInfo, double billAmount, 
-			double discountAmount, List<com.storeorderingsystem.storeorderingsystem.products.model.ItemQuantity> itemRepositoryList) {
+	private Bill saveBillAndItemRepository(com.storeorderingsystem.storeorderingsystem.products.dto.BillDto billInfo, double billAmount, 
+			double discountAmount, List<com.storeorderingsystem.storeorderingsystem.products.model.Products> itemRepositoryList) {
 		Bill billRepoObj = null;
     	if(itemRepositoryList.size() > 0) {
-    		for(ItemQuantity item: itemRepositoryList) {       	
+    		for(Products item: itemRepositoryList) {       	
     			billRepoObj = new Bill();
     			//billRepoObj.setBillId(billInfo.getBillId());
     			billRepoObj.setStoreUserId(Long.valueOf(billInfo.getStoreUserId()));
@@ -124,7 +124,7 @@ public class BillProcessingServiceImpl implements BillProcessingService{
 		boolean discountApplied = false;
 		if(userType != null) {
 			
-			if(!itemType.equalsIgnoreCase(Constants.ITEM_TYPE_GROCERIES)) {
+			if(!itemType.equalsIgnoreCase(Constants.PRODUCT_TYPE_GROCERIES)) {
 				if(userType.equalsIgnoreCase(Constants.USER_ROLE_ADMIN) ) {
 					discountAmount = calculateDiscountAmount(Constants.USER_TYPE_EMPLOYEE_DISCOUNT_PERCENT, billAmount);
 					discountApplied = true;

@@ -4,11 +4,11 @@ public class Constants {
 
 	public static final String USER_ROLE_ADMIN = "ADMIN";
 	public static final String USER_ROLE_AFFILIATE = "AFFILIATE";
-	public static final String USER_ROLE_CUSTOMER = "CUSTOMER";
+	public static final String USER_ROLE_CUSTOMER = "USER";
 	
-	public static final String ITEM_TYPE_GROCERIES = "GROCERIES";
-	public static final String ITEM_TYPE_UTILITIES = "UTILITIES";
-	public static final String ITEM_TYPE_STATIONARY = "STAIONARY";
+	public static final String PRODUCT_TYPE_GROCERIES = "GROCERIES";
+	public static final String PRODUCT_TYPE_UTILITIES = "UTILITIES";
+	public static final String PRODUCT_TYPE_STATIONARY = "STAIONARY";
 	
 	public static final int USER_TYPE_EMPLOYEE_DISCOUNT_PERCENT = 30;
 	public static final int USER_TYPE_AFFILIATE_DISCOUNT_PERCENT = 10;

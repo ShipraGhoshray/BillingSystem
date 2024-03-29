@@ -11,12 +11,12 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="ITEM_QUANTITY")
-public class ItemQuantity {
+public class Products {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ITEM_ID")
-    private long itemId;
+    private long productId;
 
 	@Column(name = "NAME")
     private String name;
@@ -30,11 +30,11 @@ public class ItemQuantity {
 	@Column(name = "TYPE")
     private String type;
 	
-	public ItemQuantity() {
+	public Products() {
 	}
 
-	public ItemQuantity(long itemId, String name, int price, int quantity, String type) {
-		this.itemId = itemId;
+	public Products(long productId, String name, int price, int quantity, String type) {
+		this.productId = productId;
 	    this.name = name;
 	    this.price = price;
 	    this.quantity = quantity;
@@ -51,11 +51,11 @@ public class ItemQuantity {
 	}
 
 	public long getItemId() {
-		return itemId;
+		return productId;
 	}
 
 	public void setItemId(long itemId) {
-		this.itemId = itemId;
+		this.productId = itemId;
 	}
 	
 	public String getName() {
@@ -85,7 +85,7 @@ public class ItemQuantity {
 	@Override
 	public String toString() {
 		return "ItemQuantity{" +
-				"itemId='" + itemId + '\'' +
+				"itemId='" + productId + '\'' +
 				", name='" + name + '\'' +
 				", price='" + price + '\'' +
 				", quantity='" + quantity + '\'' +
@@ -99,8 +99,8 @@ public class ItemQuantity {
 			return true;
 		if (o == null || getClass() != o.getClass()) 
 			return false;
-		ItemQuantity that = (ItemQuantity) o;
-		return Objects.equals(itemId, that.itemId) &&
+		Products that = (Products) o;
+		return Objects.equals(productId, that.productId) &&
 				Objects.equals(name, that.name)&&
 				Objects.equals(price, that.price)&&
 				Objects.equals(quantity, that.quantity)&&
@@ -109,6 +109,6 @@ public class ItemQuantity {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(itemId, name, price, quantity, type);
+		return Objects.hash(productId, name, price, quantity, type);
 	}
 }

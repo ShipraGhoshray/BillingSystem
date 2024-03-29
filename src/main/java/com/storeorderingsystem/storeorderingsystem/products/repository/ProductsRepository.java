@@ -2,8 +2,8 @@ package com.storeorderingsystem.storeorderingsystem.products.repository;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.storeorderingsystem.storeorderingsystem.products.model.ItemQuantity;
+import com.storeorderingsystem.storeorderingsystem.products.model.Products;
 
 //@RepositoryRest	
-public interface ProductsRepository extends CrudRepository<ItemQuantity, Long>{
+public interface ProductsRepository extends CrudRepository<Products, Long>{
 }

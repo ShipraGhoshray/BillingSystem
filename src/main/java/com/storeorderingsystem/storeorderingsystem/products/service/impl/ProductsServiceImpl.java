@@ -4,42 +4,41 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.storeorderingsystem.storeorderingsystem.products.model.ItemQuantity;
+import com.storeorderingsystem.storeorderingsystem.products.model.Products;
 import com.storeorderingsystem.storeorderingsystem.products.repository.ProductsRepository;
 import com.storeorderingsystem.storeorderingsystem.products.service.ProductsService;
 
 @Service
 public class ProductsServiceImpl implements ProductsService{
-    private ProductsRepository itemQuantityRepository;
+    private ProductsRepository productsRepository;
 
-    public ProductsServiceImpl(ProductsRepository itemQuantityRepository) {
-        this.itemQuantityRepository = itemQuantityRepository;
+    public ProductsServiceImpl(ProductsRepository productsRepository) {
+        this.productsRepository = productsRepository;
     }
 
     @Override
-    public ItemQuantity createItemInventory(long itemId, String name, int price, int quantity, String type) {
-        return itemQuantityRepository.findById(itemId).orElse(
-        		itemQuantityRepository.save(new ItemQuantity(itemId, name, price, quantity, type)));   
+    public Products createProducts(long productId, String name, int price, int quantity, String type) {
+        return productsRepository.findById(productId).orElse(
+        		productsRepository.save(new Products(productId, name, price, quantity, type)));   
     }
 
     @Override
-    public Iterable<ItemQuantity> lookup(){
-        return itemQuantityRepository.findAll();
+    public Iterable<Products> lookup(){
+        return productsRepository.findAll();
     }
 
     @Override
     public long total() {
-        return itemQuantityRepository.count();
+        return productsRepository.count();
     }
     
     @Override
-	public ItemQuantity save(ItemQuantity item) {
-    	return itemQuantityRepository.save(item);
+	public Products save(Products product) {
+    	return productsRepository.save(product);
     }
     
     @Override
-    public Optional<ItemQuantity> findById(long id, String name){
-    	return itemQuantityRepository.findById(id);
+    public Optional<Products> findById(long productId, String name){
+    	return productsRepository.findById(productId);
     }
 }
-
