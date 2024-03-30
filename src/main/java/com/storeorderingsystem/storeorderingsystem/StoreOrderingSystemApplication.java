@@ -69,18 +69,18 @@ public class StoreOrderingSystemApplication implements CommandLineRunner{
 	}
 	
 	private void addRoles() {
-		roleService.addRole(1L, "ADMIN", null);
-		roleService.addRole(2L, "USER", null);
-		roleService.addRole(3L, "AFFILIATE", null);
+		roleService.addRole(1, "ADMIN", null);
+		roleService.addRole(2, "USER", null);
+		roleService.addRole(3, "AFFILIATE", null);
 	}
 	
 	private void createUsers() {
 		
 		userService.createStoreUser(1L, 
-				List.of(new Role(1, Constants.USER_ROLE_ADMIN, null),
-						new Role(2, Constants.USER_ROLE_CUSTOMER, null)), 
+				List.of(new Role(1, Constants.USER_ROLE_ADMIN),
+						new Role(2, Constants.USER_ROLE_USER)), 
 				"Joey", "Tribiani", "joey", passwordEncoder.encode("password") , "joey.tribiani@gmail.com", 971565678901L);
-		userService.createStoreUser(2L, List.of(new Role(1, Constants.USER_ROLE_ADMIN, null)), 
+		userService.createStoreUser(2L, List.of(new Role(1, Constants.USER_ROLE_USER)), 
 				"Rachel", "Green", "rachel", passwordEncoder.encode("password"), "Rachel.Green@gmail.com", 971566789012L);
 		//userService.createStoreUser(3L, Constants.USER_ROLE_CUSTOMER, "Ross", "Gellar", "Ross.Gellar@gmail.com", 971567890123L);
 		//userService.createStoreUser(4L, Constants.USER_ROLE_CUSTOMER, "Monica",	"Gellar", "Monica.Gellar@gmail.com", 971568901234L);
@@ -88,13 +88,13 @@ public class StoreOrderingSystemApplication implements CommandLineRunner{
 	}
 
 	private void createInventory(){
-		productsService.createProducts(1L, "Bread", 10, 5, Constants.PRODUCT_TYPE_GROCERIES);
-		productsService.createProducts(2L, "Eggs", 10, 2, Constants.PRODUCT_TYPE_GROCERIES);
-		productsService.createProducts(3L, "Milk", 10, 1, Constants.PRODUCT_TYPE_GROCERIES);
-		productsService.createProducts(4L, "Chicken", 1, 5, Constants.PRODUCT_TYPE_GROCERIES);
-		productsService.createProducts(5L, "Garbage Bags", 3, 5, Constants.PRODUCT_TYPE_UTILITIES);
-		productsService.createProducts(6L, "Shampoo", 10, 1, Constants.PRODUCT_TYPE_UTILITIES);
-		productsService.createProducts(7L, "Stapler", 10, 1, Constants.PRODUCT_TYPE_STATIONARY);
+		productsService.createProducts("Bread", 10, Constants.PRODUCT_TYPE_GROCERIES);
+		productsService.createProducts("Eggs", 10, Constants.PRODUCT_TYPE_GROCERIES);
+		productsService.createProducts("Milk", 10, Constants.PRODUCT_TYPE_GROCERIES);
+		productsService.createProducts("Chicken", 12, Constants.PRODUCT_TYPE_GROCERIES);
+		productsService.createProducts("Garbage Bags", 32, Constants.PRODUCT_TYPE_UTILITIES);
+		productsService.createProducts("Shampoo", 10, Constants.PRODUCT_TYPE_UTILITIES);
+		productsService.createProducts("Stapler", 10, Constants.PRODUCT_TYPE_STATIONARY);
 	}
 }
 	

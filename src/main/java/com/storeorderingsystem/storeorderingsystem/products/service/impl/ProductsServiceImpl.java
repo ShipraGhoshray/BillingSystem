@@ -17,9 +17,8 @@ public class ProductsServiceImpl implements ProductsService{
     }
 
     @Override
-    public Products createProducts(long productId, String name, int price, int quantity, String type) {
-        return productsRepository.findById(productId).orElse(
-        		productsRepository.save(new Products(productId, name, price, quantity, type)));   
+    public Products createProducts(String name, int price, String type) {
+        return productsRepository.findByName(name).orElse(productsRepository.save(new Products(name, price, type)));   
     }
 
     @Override

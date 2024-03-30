@@ -33,6 +33,12 @@ public class Products {
 	public Products() {
 	}
 
+	public Products(String name, int price, String type) {
+	    this.name = name;
+	    this.price = price;
+	    this.type = type;
+	}
+	
 	public Products(long productId, String name, int price, int quantity, String type) {
 		this.productId = productId;
 	    this.name = name;

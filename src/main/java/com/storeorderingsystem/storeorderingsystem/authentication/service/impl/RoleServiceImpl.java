@@ -35,8 +35,7 @@ public class RoleServiceImpl implements RoleService{
 
 	@Override
 	public Role addRole(long roleId, String name, List<User> users) {
-		return roleRepository.findById(roleId).orElse(roleRepository.save(new Role(Integer.valueOf(String.valueOf(roleId)), 
-				name, users)));
+		return roleRepository.findById(roleId).orElse(roleRepository.save(new Role(Integer.valueOf(String.valueOf(roleId)), name)));
 	}
 
 	@Override

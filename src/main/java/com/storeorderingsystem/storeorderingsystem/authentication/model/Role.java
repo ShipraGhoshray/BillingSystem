@@ -1,14 +1,10 @@
 package com.storeorderingsystem.storeorderingsystem.authentication.model;
 
-import java.util.List;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,12 +18,9 @@ public class Role {
 	@Column(name = "ROLE_NAME")
     private String name;
 
-	/*@ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
-    private List<User> users;*/
-
 	public Role() { }
 	
-	public Role(int roleId, String name , List<User> users) {
+	public Role(int roleId, String name) {
 		this.roleId = roleId;
 	    this.name = name;
 	}

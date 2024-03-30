@@ -4,7 +4,7 @@ public class Constants {
 
 	public static final String USER_ROLE_ADMIN = "ADMIN";
 	public static final String USER_ROLE_AFFILIATE = "AFFILIATE";
-	public static final String USER_ROLE_CUSTOMER = "USER";
+	public static final String USER_ROLE_USER = "USER";
 	
 	public static final String PRODUCT_TYPE_GROCERIES = "GROCERIES";
 	public static final String PRODUCT_TYPE_UTILITIES = "UTILITIES";

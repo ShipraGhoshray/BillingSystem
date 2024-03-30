@@ -6,5 +6,4 @@ import com.storeorderingsystem.storeorderingsystem.authentication.model.Role;
 
 public interface RoleRepository extends CrudRepository<Role, Long>{
 
-	//public Optional<User> findByUsername(String username);
 }

@@ -32,15 +32,15 @@ public class SecurityConfiguration {
 		http.csrf(csrf -> csrf.disable())
 			.cors(cors -> cors.disable())
 			.authorizeHttpRequests(authorize -> { authorize
-				.requestMatchers(HttpMethod.POST, "/api/products").hasRole("ADMIN")
-				.requestMatchers(HttpMethod.DELETE, "/auth/users/**").hasRole("ADMIN")
-				.requestMatchers(HttpMethod.GET, "/auth/users").permitAll()
-				.requestMatchers(HttpMethod.GET, "/auth/users/**").permitAll()
-				.requestMatchers(HttpMethod.GET, "/api/products").permitAll()
-				.requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
-         		.requestMatchers("/auth/login").permitAll()
-         		.requestMatchers("/auth/*").permitAll()
-				.anyRequest().authenticated();
+				.requestMatchers("/api/products").hasRole("ADMIN")
+				//.requestMatchers(HttpMethod.DELETE, "/auth/users/**").hasRole("ADMIN")
+				.requestMatchers(HttpMethod.GET, "/auth/**").permitAll()
+				//.requestMatchers(HttpMethod.GET, "/auth/users/**").permitAll()
+				//.requestMatchers(HttpMethod.GET, "/api/products").permitAll()
+				//.requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
+         		.requestMatchers("/auth/login").permitAll() //working 1
+         		//.requestMatchers("/auth/*").permitAll()
+				.anyRequest().authenticated();	//working 1
 			}).httpBasic(Customizer.withDefaults());
 		http.exceptionHandling(exception -> exception.authenticationEntryPoint(authEntryPoint));
 		http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));

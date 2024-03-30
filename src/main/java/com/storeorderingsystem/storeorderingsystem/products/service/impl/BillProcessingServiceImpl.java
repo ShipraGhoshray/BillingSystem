@@ -39,7 +39,7 @@ public class BillProcessingServiceImpl implements BillProcessingService{
         double price = 0.0;
         double billAmount = 0.0;
         double discountAmt = 0.0;
-        String userType = Constants.USER_ROLE_CUSTOMER;
+        String userType = Constants.USER_ROLE_USER;
         Date joiningDate = new Date();
         List<Products> itemRepositoryList = new ArrayList<Products>();
         User user = null;

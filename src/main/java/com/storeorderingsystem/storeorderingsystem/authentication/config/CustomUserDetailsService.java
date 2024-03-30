@@ -48,11 +48,13 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
         	
       	com.storeorderingsystem.storeorderingsystem.authentication.model.User user = 
-    	userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Username not found"));	
-      	return new User(user.getUsername(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
+    	userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Username not found"));
+      	Collection<GrantedAuthority> grantedAuthorities = mapRolesToAuthorities(user.getRoles());
+      	return new User(user.getUsername(), user.getPassword(), grantedAuthorities);
     }
     
     private Collection<GrantedAuthority> mapRolesToAuthorities(List<Role> roles) {
+    	
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
     }
     

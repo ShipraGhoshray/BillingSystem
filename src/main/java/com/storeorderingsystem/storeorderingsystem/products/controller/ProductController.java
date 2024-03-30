@@ -1,6 +1,5 @@
 package com.storeorderingsystem.storeorderingsystem.products.controller;
 
-import java.util.Collection;
 import java.util.NoSuchElementException;
 
 import org.slf4j.Logger;
@@ -8,8 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,8 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.storeorderingsystem.storeorderingsystem.products.dto.BillDto;
 import com.storeorderingsystem.storeorderingsystem.products.dto.BillAmountDto;
+import com.storeorderingsystem.storeorderingsystem.products.dto.BillDto;
+import com.storeorderingsystem.storeorderingsystem.products.dto.ProductsDto;
 import com.storeorderingsystem.storeorderingsystem.products.model.Products;
 import com.storeorderingsystem.storeorderingsystem.products.service.BillProcessingService;
 import com.storeorderingsystem.storeorderingsystem.products.service.ProductsService;
@@ -27,7 +25,7 @@ import com.storeorderingsystem.storeorderingsystem.util.Constants;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
 public class ProductController {
 	
 	Logger log = LoggerFactory.getLogger(ProductController.class);
@@ -40,14 +38,14 @@ public class ProductController {
 		this.productService = productService;
 	}
 	
-	@GetMapping("/products")
+	/*@GetMapping("/products")
     public Collection<Products> getItemInventoryReact(){
         return (Collection<Products>) this.productService.lookup();
-    }
+    }*/
 	
 	@PostMapping("/products")
-    public ResponseEntity<String> createNewProduct(@Validated @RequestBody Products productReq){
-        Products product = this.productService.createProducts(productReq.getItemId(), productReq.getName(), productReq.getPrice(), productReq.getQuantity(), productReq .getType());
+    public ResponseEntity<String> createNewProduct(@RequestBody ProductsDto productReq){
+        Products product = this.productService.createProducts(productReq.getName(), productReq.getPrice(), productReq .getType());
         if(product != null) {
             return new ResponseEntity<String>(Constants.RESPONSE_PRODUCT_CREATED, HttpStatus.OK);
         }else {
