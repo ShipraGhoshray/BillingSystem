@@ -10,7 +10,7 @@ import com.storeorderingsystem.storeorderingsystem.model.User;
 @Service
 public interface RoleService{
 
-	public Role addRole(long roleId, String name, List<User> users);
+	public Role addRole(long roleId, String name);
 	public Iterable<Role> lookup();
 	public Optional<Role> findById(long id);
 	public long total();

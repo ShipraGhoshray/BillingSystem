@@ -20,6 +20,10 @@ public class Role {
 
 	public Role() { }
 	
+	public Role(String name) {
+	    this.name = name;
+	}
+	
 	public Role(int roleId, String name) {
 		this.roleId = roleId;
 	    this.name = name;

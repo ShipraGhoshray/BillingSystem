@@ -69,9 +69,9 @@ public class StoreOrderingSystemApplication implements CommandLineRunner{
 	}
 	
 	private void addRoles() {
-		roleService.addRole(1, "ADMIN", null);
-		roleService.addRole(2, "USER", null);
-		roleService.addRole(3, "AFFILIATE", null);
+		roleService.addRole(1, "ADMIN");
+		roleService.addRole(2, "USER");
+		roleService.addRole(3, "AFFILIATE");
 	}
 	
 	private void createUsers() {
