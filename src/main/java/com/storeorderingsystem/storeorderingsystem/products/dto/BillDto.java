@@ -9,7 +9,7 @@ public class BillDto {
     
     private String billId;
     private String storeUserId;
-    private List<ProductsDto> items;
+    private List<ProductsDto> products;
     private long createdDate;
     private float totalPrice;
     
@@ -45,11 +45,12 @@ public class BillDto {
 		this.totalPrice = totalPrice;
 	}
 
-	public List<ProductsDto> getItems() {
-		return items;
+	public List<ProductsDto> getProducts() {
+		return products;
 	}
 
-	public void setItems(List<ProductsDto> items) {
-		this.items = items;
+	public void setProducts(List<ProductsDto> products) {
+		this.products = products;
 	}
+
 }

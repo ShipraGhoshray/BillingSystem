@@ -1,10 +1,14 @@
 package com.storeorderingsystem.storeorderingsystem.products.model;
 
+import java.util.Set;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -17,10 +21,7 @@ public class Bill {
     private long billId;
 
 	@Column(name = "USER_ID")
-    private long storeUserId;
-	
-	@Column(name = "ITEM_QUANTITY_ID")
-    private long itemsQuantityId;
+    private long userId;
 	
 	@Column(name = "CREATED_DATE")
     private long createdDate;
@@ -33,6 +34,10 @@ public class Bill {
     
 	@Column(name = "BILL_AMOUNT")
     private double billAmount;
+
+	@OneToMany
+	@JoinColumn(name = "BILL_ID")
+	private Set<Products> products;
 	
 	public long getBillId() {
 		return billId;
@@ -40,6 +45,14 @@ public class Bill {
 
 	public void setBillId(long billId) {
 		this.billId = billId;
+	}
+
+	public long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(long userId) {
+		this.userId = userId;
 	}
 
 	public long getCreatedDate() {
@@ -58,22 +71,6 @@ public class Bill {
 		this.billAmount = billAmount;
 	}
 
-	public long getStoreUserId() {
-		return storeUserId;
-	}
-
-	public void setStoreUserId(long storeUserId) {
-		this.storeUserId = storeUserId;
-	}
-	
-	public long getItemsQuantityId() {
-		return itemsQuantityId;
-	}
-
-	public void setItemsQuantityId(long itemsQuantityId) {
-		this.itemsQuantityId = itemsQuantityId;
-	}
-
 	public double getDiscountAmount() {
 		return discountAmount;
 	}
@@ -88,6 +85,14 @@ public class Bill {
 
 	public void setTotalPrice(float totalPrice) {
 		this.totalPrice = totalPrice;
+	}
+
+	public Set<Products> getProducts() {
+		return products;
+	}
+
+	public void setProducts(Set<Products> products) {
+		this.products = products;
 	}
 
 }

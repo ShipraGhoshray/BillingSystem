@@ -7,15 +7,17 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="ITEM_QUANTITY")
+@Table(name="PRODUCTS")
 public class Products {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "ITEM_ID")
+	@Column(name = "PRODUCT_ID")
     private long productId;
 
 	@Column(name = "NAME")
@@ -24,11 +26,12 @@ public class Products {
 	@Column(name = "PRICE")
     private int price;
 	
-	@Column(name = "QUANTITY")
-    private int quantity;
-	
 	@Column(name = "TYPE")
     private String type;
+	
+	@ManyToOne
+    @JoinColumn(name = "BILL_ID", insertable = false, updatable = false)
+    private Bill bill;
 	
 	public Products() {
 	}
@@ -39,15 +42,14 @@ public class Products {
 	    this.type = type;
 	}
 	
-	public Products(long productId, String name, int price, int quantity, String type) {
-		this.productId = productId;
-	    this.name = name;
-	    this.price = price;
-	    this.quantity = quantity;
-	    this.type = type;
+	public long getProductId() {
+		return productId;
 	}
-	    
-	    
+
+	public void setProductId(long productId) {
+		this.productId = productId;
+	}
+
 	public String getType() {
 		return type;
 	}
@@ -56,14 +58,6 @@ public class Products {
 		this.type = type;
 	}
 
-	public long getItemId() {
-		return productId;
-	}
-
-	public void setItemId(long itemId) {
-		this.productId = itemId;
-	}
-	
 	public String getName() {
 		return name;
 	}
@@ -80,21 +74,20 @@ public class Products {
 		this.price = price;
 	}
 
-	public int getQuantity() {
-		return quantity;
+	public Bill getBill() {
+		return bill;
 	}
 
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
+	public void setBill(Bill bill) {
+		this.bill = bill;
 	}
 	
 	@Override
 	public String toString() {
-		return "ItemQuantity{" +
-				"itemId='" + productId + '\'' +
+		return "Products{" +
+				"productId='" + productId + '\'' +
 				", name='" + name + '\'' +
 				", price='" + price + '\'' +
-				", quantity='" + quantity + '\'' +
 				", type='" + type + '\'' +
 				'}';
 	}
@@ -109,12 +102,11 @@ public class Products {
 		return Objects.equals(productId, that.productId) &&
 				Objects.equals(name, that.name)&&
 				Objects.equals(price, that.price)&&
-				Objects.equals(quantity, that.quantity)&&
 				Objects.equals(type, that.type);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(productId, name, price, quantity, type);
+		return Objects.hash(productId, name, price, type);
 	}
 }

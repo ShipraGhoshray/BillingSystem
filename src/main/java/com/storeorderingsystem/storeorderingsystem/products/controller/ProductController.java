@@ -53,13 +53,13 @@ public class ProductController {
     }
 	
 	@GetMapping("/products")
-    public Collection<Products> getItemInventoryReact(){
+    public Collection<Products> getProductsReact(){
         return (Collection<Products>) this.productService.lookup();
     }
     
-    @PostMapping("/createNewItemAPI")
-	ResponseEntity<Products> createNewItemAPI(@Validated @RequestBody Products item) throws URISyntaxException {
-    	Products result = productService.save(item);
+    @PostMapping("/createNewProductAPI")
+	ResponseEntity<Products> createNewProductAPI(@Validated @RequestBody Products product) throws URISyntaxException {
+    	Products result = productService.save(product);
 		return ResponseEntity.ok().body(result);
 	}
 	
