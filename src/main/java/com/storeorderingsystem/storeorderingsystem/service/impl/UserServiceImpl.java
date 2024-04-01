@@ -12,36 +12,36 @@ import com.storeorderingsystem.storeorderingsystem.service.UserService;
 
 @Service
 public class UserServiceImpl implements UserService{
-    private UserRepository storeUserRepository;
+    private UserRepository userRepository;
 
-    public UserServiceImpl(UserRepository storeUserRepository) {
-        this.storeUserRepository = storeUserRepository;
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @Override
     public Iterable<User> lookup(){
-        return storeUserRepository.findAll();
+        return userRepository.findAll();
     }
 
     @Override
     public Optional<User> findById(long id){
-    	return storeUserRepository.findById(id);
+    	return userRepository.findById(id);
     }
     
     @Override
     public long total() {
-        return storeUserRepository.count();
+        return userRepository.count();
     }
 
 	@Override
 	public User createStoreUser(long userId, List<Role> roles, String firstName, String lastName, String username, String password, String emailId, long phoneNumber) {
-        return storeUserRepository.findById(userId).orElse(
-        		storeUserRepository.save(new User(userId, roles, firstName, lastName, username, password, emailId, phoneNumber)));
+        return userRepository.findById(userId).orElse(
+        		userRepository.save(new User(userId, roles, firstName, lastName, username, password, emailId, phoneNumber)));
 	}
 
 	@Override
 	public void delete(User user){
-		storeUserRepository.delete(user);
+		userRepository.delete(user);
 	}
 }
 

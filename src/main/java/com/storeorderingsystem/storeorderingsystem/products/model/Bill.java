@@ -16,7 +16,7 @@ public class Bill {
 	@Column(name = "BILL_ID")
     private long billId;
 
-	@Column(name = "STORE_USER_ID")
+	@Column(name = "USER_ID")
     private long storeUserId;
 	
 	@Column(name = "ITEM_QUANTITY_ID")
