@@ -1,4 +1,4 @@
-package com.storeorderingsystem.storeorderingsystem.authentication.controller;
+package com.storeorderingsystem.storeorderingsystem.controller;
 
 import java.security.Principal;
 import java.util.List;
@@ -24,13 +24,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.storeorderingsystem.storeorderingsystem.authentication.dto.JwtLoginRequest;
-import com.storeorderingsystem.storeorderingsystem.authentication.dto.JwtLoginResponse;
-import com.storeorderingsystem.storeorderingsystem.authentication.dto.ResponseHandler;
-import com.storeorderingsystem.storeorderingsystem.authentication.jwt.JWTGenerator;
-import com.storeorderingsystem.storeorderingsystem.authentication.model.User;
-import com.storeorderingsystem.storeorderingsystem.authentication.service.UserService;
+import com.storeorderingsystem.storeorderingsystem.authentication.JWTGenerator;
+import com.storeorderingsystem.storeorderingsystem.dto.JwtLoginRequest;
+import com.storeorderingsystem.storeorderingsystem.dto.JwtLoginResponse;
+import com.storeorderingsystem.storeorderingsystem.dto.ResponseHandler;
 import com.storeorderingsystem.storeorderingsystem.exceptions.ResourceNotFoundException;
+import com.storeorderingsystem.storeorderingsystem.model.User;
+import com.storeorderingsystem.storeorderingsystem.products.dto.ProductsDto;
+import com.storeorderingsystem.storeorderingsystem.products.model.Products;
+import com.storeorderingsystem.storeorderingsystem.products.service.ProductsService;
+import com.storeorderingsystem.storeorderingsystem.service.UserService;
 import com.storeorderingsystem.storeorderingsystem.util.Constants;
 
 @RestController
@@ -40,12 +43,15 @@ public class AuthController {
 	Logger log = LoggerFactory.getLogger(AuthController.class);
 	
 	private final UserService userService;
+	private final ProductsService productService;
 	final private UserDetailsService userDetailService;
 	final private AuthenticationManager authManager;
 	final private JWTGenerator jwtTokenGenerator;
 	
-	public AuthController(UserService userService, UserDetailsService userDetailService, AuthenticationManager authManager, JWTGenerator jwtTokenGenerator) {
+	public AuthController(UserService userService, ProductsService productService,
+			UserDetailsService userDetailService, AuthenticationManager authManager, JWTGenerator jwtTokenGenerator) {
 		this.userService = userService;
+		this.productService = productService;
 		this.userDetailService = userDetailService;
 		this.authManager = authManager;
 		this.jwtTokenGenerator = jwtTokenGenerator;
@@ -63,7 +69,6 @@ public class AuthController {
         JwtLoginResponse response = new JwtLoginResponse();
         response.setJwtToken(token);
         response.setUsername(userDetails.getUsername());
-        //return new ResponseEntity<>(response, HttpStatus.OK);
         return ResponseHandler.generateResponse(HttpStatus.OK, response);
     }
 
@@ -122,5 +127,16 @@ public class AuthController {
     private User verifyUser(String userIdReq) throws NoSuchElementException {
     	long userId = Long.valueOf(userIdReq);
     	return userService.findById(userId).orElseThrow(() -> new ResourceNotFoundException("Delete request for user (" + userId + ")"));
+    }
+    
+    //testing
+    @PostMapping("/products")
+    public ResponseEntity<String> createNewProduct(@RequestBody ProductsDto productReq){
+        Products product = this.productService.createProducts(productReq.getName(), productReq.getPrice(), productReq .getType());
+        if(product != null) {
+            return ResponseHandler.generateResponse(HttpStatus.OK, Constants.RESPONSE_PRODUCT_CREATED);
+        }else {
+            return ResponseHandler.generateResponse(HttpStatus.OK, Constants.RESPONSE_PRODUCT_CREATED_FAILED);
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.storeorderingsystem.storeorderingsystem.authentication.util;
+package com.storeorderingsystem.storeorderingsystem.util;
 
 public class SecurityConstants {
     public static final long JWT_EXPIRATION = 70000;

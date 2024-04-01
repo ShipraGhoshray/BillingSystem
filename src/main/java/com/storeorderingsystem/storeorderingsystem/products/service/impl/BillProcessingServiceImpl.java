@@ -7,13 +7,13 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.storeorderingsystem.storeorderingsystem.authentication.model.User;
-import com.storeorderingsystem.storeorderingsystem.authentication.repository.UserRepository;
+import com.storeorderingsystem.storeorderingsystem.model.User;
 import com.storeorderingsystem.storeorderingsystem.products.dto.BillAmountDto;
 import com.storeorderingsystem.storeorderingsystem.products.model.Bill;
 import com.storeorderingsystem.storeorderingsystem.products.model.Products;
 import com.storeorderingsystem.storeorderingsystem.products.repository.BillRepository;
 import com.storeorderingsystem.storeorderingsystem.products.service.BillProcessingService;
+import com.storeorderingsystem.storeorderingsystem.repository.UserRepository;
 import com.storeorderingsystem.storeorderingsystem.util.Constants;
 import com.storeorderingsystem.storeorderingsystem.util.DateUtils;
 

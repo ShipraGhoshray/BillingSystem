@@ -1,4 +1,4 @@
-package com.storeorderingsystem.storeorderingsystem.authentication.dto;
+package com.storeorderingsystem.storeorderingsystem.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

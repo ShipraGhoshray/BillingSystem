@@ -1,4 +1,4 @@
-package com.storeorderingsystem.storeorderingsystem.authentication.config;
+package com.storeorderingsystem.storeorderingsystem.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

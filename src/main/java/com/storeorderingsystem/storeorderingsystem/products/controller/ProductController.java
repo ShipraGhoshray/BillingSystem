@@ -38,12 +38,7 @@ public class ProductController {
 		this.productService = productService;
 	}
 	
-	/*@GetMapping("/products")
-    public Collection<Products> getItemInventoryReact(){
-        return (Collection<Products>) this.productService.lookup();
-    }*/
-	
-	@PostMapping("/products")
+	/*@PostMapping("/products")
     public ResponseEntity<String> createNewProduct(@RequestBody ProductsDto productReq){
         Products product = this.productService.createProducts(productReq.getName(), productReq.getPrice(), productReq .getType());
         if(product != null) {
@@ -53,11 +48,16 @@ public class ProductController {
         }
     }
 	
-	/*@PostMapping("/createNewItemAPI")
+	@GetMapping("/products")
+    public Collection<Products> getItemInventoryReact(){
+        return (Collection<Products>) this.productService.lookup();
+    }
+    
+    @PostMapping("/createNewItemAPI")
 	ResponseEntity<ItemQuantity> createNewItemAPI(@Validated @RequestBody ItemQuantity item) throws URISyntaxException {
 		ItemQuantity result = itemInventoryService.save(item);
 		return ResponseEntity.ok().body(result);
-	}*/
+	}
 	
 	@PostMapping("/bill")
     public BillAmountDto generateBillAmount(@RequestBody BillDto bill){
@@ -85,5 +85,5 @@ public class ProductController {
     	}catch(NoSuchElementException e) {
     		return null;
     	}
-    }
+    }*/
 }

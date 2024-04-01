@@ -1,4 +1,4 @@
-package com.storeorderingsystem.storeorderingsystem.authentication.model;
+package com.storeorderingsystem.storeorderingsystem.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

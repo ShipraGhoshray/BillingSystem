@@ -1,4 +1,4 @@
-package com.storeorderingsystem.storeorderingsystem.authentication.config;
+package com.storeorderingsystem.storeorderingsystem.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,8 +10,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.storeorderingsystem.storeorderingsystem.authentication.jwt.JWTAuthenticationFilter;
-import com.storeorderingsystem.storeorderingsystem.authentication.jwt.JwtAuthenticationEntryPoint;
+import com.storeorderingsystem.storeorderingsystem.authentication.JWTAuthenticationFilter;
+import com.storeorderingsystem.storeorderingsystem.authentication.JwtAuthenticationEntryPoint;
 
 
 @Configuration
@@ -32,20 +32,18 @@ public class SecurityConfiguration {
 		http.csrf(csrf -> csrf.disable())
 			.cors(cors -> cors.disable())
 			.authorizeHttpRequests(authorize -> { authorize
-				.requestMatchers("/api/products").hasRole("ADMIN")
-				//.requestMatchers(HttpMethod.DELETE, "/auth/users/**").hasRole("ADMIN")
+				.requestMatchers(HttpMethod.POST, "/auth/products").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.GET, "/auth/**").permitAll()
-				//.requestMatchers(HttpMethod.GET, "/auth/users/**").permitAll()
-				//.requestMatchers(HttpMethod.GET, "/api/products").permitAll()
-				//.requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
-         		.requestMatchers("/auth/login").permitAll() //working 1
-         		//.requestMatchers("/auth/*").permitAll()
-				.anyRequest().authenticated();	//working 1
+				.requestMatchers(HttpMethod.GET, "/auth/users").permitAll()
+         		.requestMatchers("/auth/login").permitAll()
+				.anyRequest().authenticated();
 			}).httpBasic(Customizer.withDefaults());
+		
 		http.exceptionHandling(exception -> exception.authenticationEntryPoint(authEntryPoint));
 		http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 		http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 		return http.build();
+		
 		/*	authorize.requestMatchers(HttpMethod.PUT, "/api/**").hasRole("ADMIN");
 		 *  authorize.requestMatchers(HttpMethod.PATCH, "/api/**").hasAnyRole("ADMIN");
 		 *  authorize.requestMatchers(HttpMethod.DELETE, "/api/**").hasRole("ADMIN");         		
