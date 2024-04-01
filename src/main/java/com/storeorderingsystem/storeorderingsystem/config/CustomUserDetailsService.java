@@ -17,7 +17,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.storeorderingsystem.storeorderingsystem.model.Role;
-import com.storeorderingsystem.storeorderingsystem.products.controller.ProductController;
 import com.storeorderingsystem.storeorderingsystem.repository.UserRepository;
 
 @Service

@@ -1,11 +1,10 @@
 package com.storeorderingsystem.storeorderingsystem.service;
 
-import java.util.List;
 import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 import com.storeorderingsystem.storeorderingsystem.model.Role;
-import com.storeorderingsystem.storeorderingsystem.model.User;
 
 @Service
 public interface RoleService{
