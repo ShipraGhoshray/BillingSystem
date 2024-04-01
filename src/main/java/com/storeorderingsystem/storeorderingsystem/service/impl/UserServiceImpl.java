@@ -1,5 +1,6 @@
 package com.storeorderingsystem.storeorderingsystem.service.impl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,9 +35,10 @@ public class UserServiceImpl implements UserService{
     }
 
 	@Override
-	public User createStoreUser(long userId, List<Role> roles, String firstName, String lastName, String username, String password, String emailId, long phoneNumber) {
-        return userRepository.findById(userId).orElse(
-        		userRepository.save(new User(userId, roles, firstName, lastName, username, password, emailId, phoneNumber)));
+	public User createStoreUser(String username, String password, List<Role> roles, String firstName, String lastName,  String emailId, 
+			long phoneNumber,Date joiningDate) {
+        return userRepository.findByUsername(username).orElse(
+        	userRepository.save(new User(roles, firstName, lastName, username, password, emailId, phoneNumber, joiningDate)));
 	}
 
 	@Override

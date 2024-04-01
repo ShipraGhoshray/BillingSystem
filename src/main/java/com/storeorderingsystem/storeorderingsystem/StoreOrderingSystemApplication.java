@@ -1,18 +1,16 @@
 
 package com.storeorderingsystem.storeorderingsystem;
 
-import java.util.List;
-
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.storeorderingsystem.storeorderingsystem.model.Role;
 import com.storeorderingsystem.storeorderingsystem.products.service.impl.ProductsServiceImpl;
 import com.storeorderingsystem.storeorderingsystem.service.impl.RoleServiceImpl;
 import com.storeorderingsystem.storeorderingsystem.service.impl.UserServiceImpl;
 import com.storeorderingsystem.storeorderingsystem.util.Constants;
+import com.storeorderingsystem.storeorderingsystem.util.DateUtils;
 
 @SpringBootApplication
 public class StoreOrderingSystemApplication implements CommandLineRunner{
@@ -76,12 +74,13 @@ public class StoreOrderingSystemApplication implements CommandLineRunner{
 	
 	private void createUsers() {
 		
-		userService.createStoreUser(1L, 
-				List.of(new Role(1, Constants.USER_ROLE_ADMIN),
-						new Role(2, Constants.USER_ROLE_USER)), 
-				"Joey", "Tribiani", "joey", passwordEncoder.encode("password") , "joey.tribiani@gmail.com", 971565678901L);
-		userService.createStoreUser(2L, List.of(new Role(1, Constants.USER_ROLE_USER)), 
-				"Rachel", "Green", "rachel", passwordEncoder.encode("password"), "Rachel.Green@gmail.com", 971566789012L);
+		userService.createStoreUser("joey", passwordEncoder.encode("password"), 
+			roleService.getRolesByName(Constants.USER_ROLE_ADMIN, Constants.USER_ROLE_USER), 
+			"Joey", "Tribiani",  "joey.tribiani@gmail.com", 971565678901L, DateUtils.getCurrentDate());
+		
+		userService.createStoreUser("rachel", passwordEncoder.encode("password"), roleService.getRolesByName(Constants.USER_ROLE_USER),
+			"Rachel", "Green",  "Rachel.Green@gmail.com", 971566789012L, DateUtils.getCurrentDate());
+
 		//userService.createStoreUser(3L, Constants.USER_ROLE_CUSTOMER, "Ross", "Gellar", "Ross.Gellar@gmail.com", 971567890123L);
 		//userService.createStoreUser(4L, Constants.USER_ROLE_CUSTOMER, "Monica",	"Gellar", "Monica.Gellar@gmail.com", 971568901234L);
 		//userService.createStoreUser(5L, Constants.USER_ROLE_CUSTOMER, "Chandler", "Bing", "Chandler.Bing@gmail.com", 971560123456L);

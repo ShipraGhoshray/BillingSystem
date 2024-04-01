@@ -11,6 +11,11 @@ import org.springframework.util.StringUtils;
 @Component
 public class DateUtils {
 
+	public static Date getCurrentDate(){
+        return new Date();
+    }
+	
+	
 	public static Date createDateFromDateString(String dateString){
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date date = null;

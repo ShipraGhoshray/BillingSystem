@@ -1,5 +1,7 @@
 package com.storeorderingsystem.storeorderingsystem.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -39,6 +41,21 @@ public class RoleServiceImpl implements RoleService{
 	@Override
 	public void delete(Role user){
 		roleRepository.delete(user);
+	}
+	
+	@Override
+	public List<Role> getRolesByName(String... roleNames){
+		
+		List<Role> roles = new ArrayList<Role>();
+		Iterable<Role> repoRoles = roleRepository.findAll();
+		for(Role role : repoRoles) {
+			for(String roleName : roleNames) {
+				if(role.getName().equalsIgnoreCase(roleName)) {
+					roles.add(role);
+				}
+			}
+		}
+		return roles;
 	}
 }
 

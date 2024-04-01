@@ -40,7 +40,7 @@ public class BillProcessingServiceImpl implements BillProcessingService{
         double billAmount = 0.0;
         double discountAmt = 0.0;
         String userType = Constants.USER_ROLE_USER;
-        Date joiningDate = new Date();
+        //Date joiningDate = new Date();
         List<Products> itemRepositoryList = new ArrayList<Products>();
         User user = null;
         
@@ -51,12 +51,12 @@ public class BillProcessingServiceImpl implements BillProcessingService{
         			user = optionalStoreUser.get();
         		}
         		if(user!= null) {
-        			if(user.getRole() != null) {
+        			/*if(user.getRole() != null) {
             			userType = user.getRole();        				
         			}
         			if(user.getJoiningDate() != null) {
             			joiningDate = DateUtils.createDateFromDateString(user.getJoiningDate());        				
-        			}
+        			}*/
         		}
         		
         		if(billInfo.getItems()!= null && billInfo.getItems().size() > 0) {
@@ -64,7 +64,7 @@ public class BillProcessingServiceImpl implements BillProcessingService{
 
             			itemRepositoryList.add(populateItemQuantity(item));
             			price = item.getPrice() * item.getQuantity();
-            			discountAmt = getDiscountAmountOnBill(userType, joiningDate, item.getType(), price);
+            			discountAmt = getDiscountAmountOnBill(userType, user.getJoiningDate(), item.getType(), price);
                    		billAmount = billAmount + (price - discountAmt);
             		}
             		

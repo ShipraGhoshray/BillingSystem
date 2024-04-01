@@ -1,5 +1,6 @@
 package com.storeorderingsystem.storeorderingsystem.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -14,4 +15,5 @@ public interface RoleService{
 	public Optional<Role> findById(long id);
 	public long total();
 	public void delete(Role role);
+	public List<Role> getRolesByName(String... name);
 }

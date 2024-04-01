@@ -1,6 +1,7 @@
 package com.storeorderingsystem.storeorderingsystem.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -25,10 +26,7 @@ public class User {
 	@Column(name = "USER_ID")
 	private long userId;
 	
-	@Column(name = "ROLE")
-	private String role;
-	
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinTable(name = "USER_ROLES", 
     	joinColumns = @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID"),
         inverseJoinColumns = @JoinColumn(name = "ROLE_ID", referencedColumnName = "ROLE_ID"))
@@ -53,12 +51,25 @@ public class User {
 	private long phoneNumber;
 
 	@Column(name = "JOINING_DATE")
-	private String joiningDate;
+	private Date joiningDate;
 	
 	public User() {
 	}
 	
-	public User(long userId, List<Role> roles, String firstName, String lastName, String username, String password, String emailId, long phoneNumber) {
+	public User(List<Role> roles, String firstName, String lastName, String username, String password, String emailId, 
+			long phoneNumber, Date joiningDate) {
+	    this.roles = roles;
+	    this.firstName = firstName;
+	    this.lastName = lastName;
+	    this.username = username;
+	    this.password = password;
+	    this.emailId = emailId;
+	    this.phoneNumber = phoneNumber;
+	    this.joiningDate = joiningDate;
+	}
+	
+	public User(long userId, List<Role> roles, String firstName, String lastName, String username, String password, String emailId, 
+			long phoneNumber, Date joiningDate) {
 		this.userId = userId;
 	    this.roles = roles;
 	    this.firstName = firstName;
@@ -67,6 +78,8 @@ public class User {
 	    this.password = password;
 	    this.emailId = emailId;
 	    this.phoneNumber = phoneNumber;
+	    this.joiningDate = joiningDate;
+	    		;
 	}
 
 	public long getUserId() {
@@ -77,13 +90,13 @@ public class User {
 		this.userId = userId;
 	}
 
-	public String getRole() {
+	/*public String getRole() {
 		return role;
 	}
 
 	public void setRole(String role) {
 		this.role = role;
-	}
+	}*/
 
 	public String getUsername() {
 		return username;
@@ -133,11 +146,11 @@ public class User {
 		this.phoneNumber = phoneNumber;
 	}
 	
-	public String getJoiningDate() {
+	public Date getJoiningDate() {
 		return joiningDate;
 	}
 
-	public void setJoiningDate(String joiningDate) {
+	public void setJoiningDate(Date joiningDate) {
 		this.joiningDate = joiningDate;
 	}
 
@@ -153,7 +166,7 @@ public class User {
 	public String toString() {
 		return "StoreUser{" +
 				"userId='" + userId + '\'' +
-				", role='" + role + '\'' +
+				", roles='" + roles + '\'' +
 				", username='" + username + '\'' +
 				//", password='" + password + '\'' +
 				", firstName='" + firstName + '\'' +
