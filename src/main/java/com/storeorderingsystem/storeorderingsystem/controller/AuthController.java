@@ -28,6 +28,7 @@ import com.storeorderingsystem.storeorderingsystem.authentication.JWTGenerator;
 import com.storeorderingsystem.storeorderingsystem.dto.JwtLoginRequest;
 import com.storeorderingsystem.storeorderingsystem.dto.JwtLoginResponse;
 import com.storeorderingsystem.storeorderingsystem.dto.ResponseHandler;
+import com.storeorderingsystem.storeorderingsystem.dto.UserRequest;
 import com.storeorderingsystem.storeorderingsystem.exceptions.ResourceNotFoundException;
 import com.storeorderingsystem.storeorderingsystem.model.User;
 import com.storeorderingsystem.storeorderingsystem.products.dto.ProductsDto;
@@ -42,22 +43,35 @@ public class AuthController {
 
 	Logger log = LoggerFactory.getLogger(AuthController.class);
 	
-	private final UserService userService;
-	private final ProductsService productService;
+	final private UserService userService;
+	final private ProductsService productService;
 	final private UserDetailsService userDetailService;
 	final private AuthenticationManager authManager;
 	final private JWTGenerator jwtTokenGenerator;
-	
-	public AuthController(UserService userService, ProductsService productService,
-			UserDetailsService userDetailService, AuthenticationManager authManager, JWTGenerator jwtTokenGenerator) {
+	    
+	public AuthController(UserService userService, ProductsService productService, UserDetailsService userDetailService, 
+			AuthenticationManager authManager, JWTGenerator jwtTokenGenerator) {
 		this.userService = userService;
 		this.productService = productService;
 		this.userDetailService = userDetailService;
 		this.authManager = authManager;
 		this.jwtTokenGenerator = jwtTokenGenerator;
 	}
-	
-	/* LOGIN */
+
+	/* REGISTER */
+    @PostMapping("/register")
+    public ResponseEntity<String> register(@Validated @RequestBody UserRequest user) {
+
+    	Optional<User> userModel = userService.findByEmail(user.getEmailId());
+    	if (userModel.isEmpty()) {
+    		userService.save(user);
+    		return ResponseHandler.generateResponse(HttpStatus.OK, "User registered sucessfully!");
+    	} else {
+    		return ResponseHandler.generateResponse(HttpStatus.OK, "User/email Id already registerred!");
+    	}
+    }
+
+    /* LOGIN */
 	@PostMapping("/login")
     public ResponseEntity<JwtLoginResponse> login(@RequestBody JwtLoginRequest request) {
 
@@ -72,8 +86,8 @@ public class AuthController {
         return ResponseHandler.generateResponse(HttpStatus.OK, response);
     }
 
-	private void doAuthenticate(String email, String password) {
-		UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(email, password);
+	private void doAuthenticate(String username, String password) {
+		UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(username, password);
 		try {
 			authManager.authenticate(authentication);
 		} catch (BadCredentialsException e) {

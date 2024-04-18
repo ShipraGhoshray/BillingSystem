@@ -8,27 +8,28 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "ROLES")
+@Table(name = "roles", schema = "onlinestore")
 public class Role {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ROLE_ID")
-    private int roleId;
-    
-	@Column(name = "ROLE_NAME")
-    private String name;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "role_id")
+	private int roleId;
+
+	@Column(name = "role_name")
+	private String name;
 
 	public Role() { }
-	
+
 	public Role(String name) {
-	    this.name = name;
+		this.name = name;
 	}
-	
+
 	public Role(int roleId, String name) {
 		this.roleId = roleId;
-	    this.name = name;
+		this.name = name;
 	}
-	
+
 	public int getRoleId() {
 		return roleId;
 	}
@@ -39,6 +40,6 @@ public class Role {
 		return name;
 	}
 	public void setName(String name) {
-		this.name = name;
-	}   
+
+	}
 }

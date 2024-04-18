@@ -12,7 +12,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="PRODUCTS")
+@Table(name="PRODUCTS", schema = "onlinestore")
 public class Products {
 
 	@Id
@@ -30,8 +30,8 @@ public class Products {
     private String type;
 	
 	@ManyToOne
-    @JoinColumn(name = "BILL_ID", insertable = false, updatable = false)
-    private Bill bill;
+	@JoinColumn(name = "BILL_ID")
+	private Bill bill;
 	
 	public Products() {
 	}

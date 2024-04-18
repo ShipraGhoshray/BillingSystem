@@ -43,7 +43,7 @@ public class ProductController {
 	}
 	
 	@PostMapping("/products")
-    public ResponseEntity<String> createNewProduct(@RequestBody ProductsDto productReq){
+    public ResponseEntity<String> createProduct(@RequestBody ProductsDto productReq){
         Products product = this.productService.createProducts(productReq.getName(), productReq.getPrice(), productReq .getType());
         if(product != null) {
             return new ResponseEntity<String>(Constants.RESPONSE_PRODUCT_CREATED, HttpStatus.OK);
@@ -51,23 +51,17 @@ public class ProductController {
             return new ResponseEntity<String>(Constants.RESPONSE_PRODUCT_CREATED_FAILED, HttpStatus.OK);
         }
     }
+	/* @PostMapping("/createNewProductAPI")
+		ResponseEntity<Products> createNewProductAPI(@Validated @RequestBody Products product) throws URISyntaxException {
+	    	Products result = productService.save(product);
+			return ResponseEntity.ok().body(result);
+	}*/
 	
 	@GetMapping("/products")
-    public Collection<Products> getProductsReact(){
+    public Collection<Products> getProducts(){
         return (Collection<Products>) this.productService.lookup();
     }
     
-    @PostMapping("/createNewProductAPI")
-	ResponseEntity<Products> createNewProductAPI(@Validated @RequestBody Products product) throws URISyntaxException {
-    	Products result = productService.save(product);
-		return ResponseEntity.ok().body(result);
-	}
-	
-	@PostMapping("/bill")
-    public BillAmountDto generateBillAmount(@RequestBody BillDto bill){
-        return this.billProcessingService.processBill(bill);
-    }
-	
 	@PutMapping("/products/{productId}/details")
 	public Products updateWithPut(@PathVariable(value = "productId") String productId, @RequestBody @Validated Products productRequest) {
 		Products product = verifyProduct(productId, productRequest.getName());
@@ -89,5 +83,11 @@ public class ProductController {
     	}catch(NoSuchElementException e) {
     		return null;
     	}
+    }
+    
+	/* Billing */
+	@PostMapping("/bill")
+    public BillAmountDto generateBillAmount(@RequestBody BillDto bill){
+        return this.billProcessingService.processBill(bill);
     }
 }

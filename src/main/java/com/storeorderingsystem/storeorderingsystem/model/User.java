@@ -18,39 +18,39 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="STORE_USER")
+@Table(name="store_user", schema = "onlinestore")
 public class User {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "USER_ID")
+	@Column(name = "user_id")
 	private long userId;
 	
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    @JoinTable(name = "USER_ROLES", 
-    	joinColumns = @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID"),
-        inverseJoinColumns = @JoinColumn(name = "ROLE_ID", referencedColumnName = "ROLE_ID"))
+    @JoinTable(name = "user_roles", schema = "onlinestore",
+    	joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id"))
     private List<Role> roles = new ArrayList<>();
 	
-	@Column(name = "FIRST_NAME")
+	@Column(name = "first_name")
 	private String firstName;
 	
-	@Column(name = "LAST_NAME")
+	@Column(name = "last_name")
 	private String lastName;
 	
-	@Column(name = "USERNAME")
+	@Column(name = "username")
 	private String username;
 	
-	@Column(name = "PASSWORD")
+	@Column(name = "password")
 	private String password;
 	
-	@Column(name = "EMAIL_ADDRESS")
+	@Column(name = "email_address")
 	private String emailId;
 	
-	@Column(name = "PHONE_NUMBER")
+	@Column(name = "phone_number")
 	private long phoneNumber;
 
-	@Column(name = "JOINING_DATE")
+	@Column(name = "joining_date")
 	private Date joiningDate;
 	
 	public User() {

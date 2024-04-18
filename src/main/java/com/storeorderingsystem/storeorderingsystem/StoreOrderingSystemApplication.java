@@ -1,11 +1,15 @@
 
 package com.storeorderingsystem.storeorderingsystem;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.storeorderingsystem.storeorderingsystem.model.Role;
+import com.storeorderingsystem.storeorderingsystem.model.User;
 import com.storeorderingsystem.storeorderingsystem.products.service.impl.ProductsServiceImpl;
 import com.storeorderingsystem.storeorderingsystem.service.impl.RoleServiceImpl;
 import com.storeorderingsystem.storeorderingsystem.service.impl.UserServiceImpl;
@@ -15,6 +19,8 @@ import com.storeorderingsystem.storeorderingsystem.util.DateUtils;
 @SpringBootApplication
 public class StoreOrderingSystemApplication implements CommandLineRunner{
 
+	Logger log = LoggerFactory.getLogger(StoreOrderingSystemApplication.class);
+	
 	private final UserServiceImpl userService;
     private final ProductsServiceImpl productsService;
     private final RoleServiceImpl roleService;
@@ -56,20 +62,31 @@ public class StoreOrderingSystemApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-		createInventory();
+		/*createInventory();
 		addRoles();
-		createUsers();
-		long inventoryCount = productsService.total();
-		System.out.println("Total inventory in the system is : "+ inventoryCount);
-		
+		createUsers();*/
+		Iterable<Role> roles = roleService.lookup();
+		log.info("User-Roles in the system: ");
+		for(Role role: roles) {
+			log.info(role.getName());
+		}
+
 		long userCount = userService.total();
-		System.out.println("Total users in the system is : "+ userCount);
+		log.info("Total users in the system is : "+ userCount);
+		Iterable<User> userList = userService.lookup();
+		log.info("Users in the system: ");
+		for(User user: userList) {
+			log.info(user.getUsername() + "--" + user.getJoiningDate());
+		}
+
+		long inventoryCount = productsService.total();
+		log.info("Total inventory in the system is : "+ inventoryCount);
 	}
 	
 	private void addRoles() {
-		roleService.addRole(1, "ADMIN");
-		roleService.addRole(2, "USER");
-		roleService.addRole(3, "AFFILIATE");
+		roleService.addRole(1, Constants.USER_ROLE_ADMIN);
+		roleService.addRole(2, Constants.USER_ROLE_USER);
+		roleService.addRole(3, Constants.USER_ROLE_AFFILIATE);
 	}
 	
 	private void createUsers() {
@@ -96,4 +113,3 @@ public class StoreOrderingSystemApplication implements CommandLineRunner{
 		productsService.createProducts("Stapler", 10, Constants.PRODUCT_TYPE_STATIONARY);
 	}
 }
-	
